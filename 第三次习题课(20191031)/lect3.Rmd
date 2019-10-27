@@ -1,0 +1,30 @@
+---
+title: "线性代数第三次习题课"
+author: "李弢"
+date: "2019年10月31日"
+documentclass: ctexart
+output:
+  rticles::ctex:
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
+    keep_tex: true
+    includes:
+      header-includes:
+        - \usepackage[a4paper, total={6in, 8in}]{geometry}
+classoption: "hyperref,"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+\def\vec{\overrightarrow}
+
+# 线性映射的矩阵
+
+# 多项式
+
+# 特征值与特征向量
+
+
