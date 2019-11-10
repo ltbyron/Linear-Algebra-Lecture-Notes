@@ -65,7 +65,7 @@ a_{n1} & a_{n2} & \cdots & a_{nm} \\
 
 \smallskip
 
-\noindent{}解答：$\Rightarrow:$ 我们构造这样的$S$. 由于$T$是单射，那么将其视为像空间为$\range T$的线性映射$\hat{T}\in\calL(V,\range T)$是可逆的，设其逆为$\hat{S}\in\calL(\range T,V)$. 如果$v\in\range T$，我们定义$S(v)= \hat{S}(v)$， 否则定义$S(v)=0$. 容易验证，这样的$S$确实是一个线性映射，并且$ST$是$V$上的恒等映射。
+\noindent{}解答：$\Rightarrow:$ 我们构造这样的$S$. 由于$T$是单射，那么将其视为像空间为$\range T$的线性映射$\hat{T}\in\calL(V,\range T)$是可逆的，设其逆为$\hat{S}\in\calL(\range T,V)$. 如果$\range T = W$，那么$\hat{S}$就是要找的映射。否则，将像空间$W$分解为$\range T\oplus W'$，再令$S = \hat{S} P_{\range T,W'} \in \calL(W,V)$，它是两个线性映射的复合，因而也是线性映射，并且满足$ST = \hat{S}P_{\range T,W'}T = \hat{S}\hat{T}=\mathrm{Id}_V$。
 
 $\Leftarrow:$ 若有$Tv_1 = TV_2$，那么$v_1 = ST(v_1) = ST(v_2)=v_2$，因此$S$单射。
 
