@@ -4,6 +4,8 @@
 *.pptx
 *.tex
 *.txt
+*.csv
+*.xls
 =======
 ## Core latex/pdflatex auxiliary files:
 *.aux
