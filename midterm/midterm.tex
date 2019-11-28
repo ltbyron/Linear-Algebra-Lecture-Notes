@@ -1,0 +1,129 @@
+\documentclass[12pt]{article}
+\textheight 23.5cm \textwidth 15.8cm
+%\leftskip -1cm
+\topmargin -1.5cm \oddsidemargin 0.3cm \evensidemargin -0.3cm
+%\documentclass[final]{siamltex}
+
+\usepackage{verbatim}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{amsmath}
+\usepackage{CTeX}
+\usepackage{enumerate}   
+
+
+
+\title{\bf 线性代数期中考试参考题}
+\author{李弢}
+\date{}
+
+\begin{document}
+\maketitle
+\noindent{} Q1. (线性空间)
+\begin{enumerate}[(a)]
+\item 给定集合$\mathbb{R}_{++}=\{x>0|x\in\mathbb{R}\}$ 及其上面的加法运算与数乘运算：
+\[x+y = xy\quad, \quad\lambda x= x^{\lambda}.\]
+问$\mathbb{R}_{++}$在上述加法与数乘的意义下是否构成一线性空间？若不是，请说明理由；若是，请验证，并求出维数，并进一步给出它到$\mathbb{R}^{\mathrm{dim}\, \mathbb{R}_{++}}$的一个可逆线性映射。
+\item 任给一线性空间$V$，我们把$\mathcal{L}(V;\mathbb{F})$称为$V$的对偶空间，可记作$V^*$. 设$V$是有限维的，$\{v_1,v_2,\cdots,v_n\}$是一组基，定义$v_i^*\in V^*$，
+\[v_i^*:V\rightarrow \mathbb{F}, v_i^*(v_j) = \delta_{ij},\quad\forall i,j=1,2,\cdots,n,\]
+其中$\delta_{ij}$当且仅当$i=j$时为1，否则为0. 求证$\{v_1^*,v_2^*,\cdots,v_n^*\}$是$V^*$的一组基。
+\item 对于$V$的对偶空间$V^*$，我们还可以考虑它的对偶空间$V^{**}$. 证明，$V$是$V^{**}$子空间。特别地，当$V$为有限维空间时，$V=V^{**}$. 
+\end{enumerate}
+
+\noindent{} Solution.
+\begin{enumerate}[(a)]
+\item 根据定义可以验证这是一个线性空间，其加法单位元为$1$，维数为1。对数映射$\log:\mathbb{R}_{++}\rightarrow \mathbb{R}$ 是一可逆线性映射:
+\[\log(\lambda x+\mu y) =\log(x^{\lambda}y^{\mu})=\lambda \log(x)+\mu\log(y).\]
+其逆为$\exp: \mathbb{R}\rightarrow\mathbb{R}_{++}$.
+
+\item 首先注意到若$v=\sum_{j=1}^n\lambda_j v_j$，那么
+\[v_i^*(v) = v_i^*(\sum_{j=1}^n\lambda_j v_j)=\sum_{j=1}^n\lambda_j v_i^*(v_j)=\lambda_i.\]
+我们先说明$\{v_1^*,v_2^*,\cdots,v_n^*\}$是$V^*$的张成组。任意$l \in V^*, v\in V$，有
+\[l(v) = l(\sum_{i=1}^n \lambda_i v_i) = \sum_{i=1}^n\lambda_i l (v_i) =  \sum_{i=1}^n l (v_i) v_i^*(v),\]
+这就说明了任意$l \in V^*$都可以由$\{v_1^*,v_2^*,\cdots,v_n^*\}$线性表示。
+
+再来说明$\{v_1^*,v_2^*,\cdots,v_n^*\}$是线性无关的。设存在$\lambda_1,\lambda_2,\cdots,\lambda_n$使得$\sum_{i=1}^n\lambda_i v_i^*=0$，那么作用在$v_j,j=1,2,\cdots,n$上可知$\lambda_j=0$，进而说明了它们线性无关。
+
+因此$\{v_1^*,v_2^*,\cdots,v_n^*\}$ 是$V^*$的一组基。特别地，若$V$是有限维线性空间，$V^*$也是有限维线性空间，且维数与$V$相等。
+
+\item 任取$v\in V$，可以将其视为$V^*$上的线性函数：$v(l) = l(v)$. 这样定义的函数确实是线性的：
+\[v(\lambda l_1+\mu l_2) = (\lambda l_1+\mu l_2)(v) = \lambda l_1(v)+\mu l_2(v)=\lambda v(l_1)+\mu v(l_2).\] 
+这就说明了$V$是$V^{**}$的子空间。若$V$是有限维的，那么由$(b)$可知，$\mathrm{dim}\, V^* = \mathrm{dim}\, V$，再一次利用(b)可知$\mathrm{dim}\, V^{**}=\mathrm{dim}\, V^* = \mathrm{dim}\,V$， 由此可知$V^{**}=V$.
+\end{enumerate} 
+
+\bigskip
+
+\noindent{} Q2. (维数公式)
+\begin{enumerate}[(a)]
+\item 设$V$是有限维线性空间，$U_1,U_2$是$V$的子空间，那么有怎样的维数公式（不用证明）？
+\item 设$V,W$是有限维线性空间，$T\in\mathcal{L}(V;W)$是从$V$到$W$的线性映射，记T的像与核分别为$\mathrm{range}\,T$与$\mathrm{null}\,T$，那么有怎样的维数公式（不用证明）?
+\item 给定两个线性空间$U_1,U_2$，我们定义它们的笛卡尔积$U_1\times U_2=\{(u_1,u_2),u_1\in U_1,u_2\in U_2\}$，定义加法运算和数乘运算为
+\[(u_1,u_2)+(u_1',u_2')=(u_1+u_1',u_2+u_2')\quad,\quad \lambda(u_1,u_2)=(\lambda u_1,\lambda u_2).\]
+请验证$U_1\times U_2$是一个线性空间。若$U_1,U_2$均是有限维，再求$U_1\times U_2$的维数。
+\item 设$V$是有限维线性空间，$U_1,U_2$是$V$的子空间，考虑$T:U_1\times U_2\rightarrow V, T((u_1,u_2))=u_1+u_2$. 证明$T\in\mathcal{L}(U_1\times U_2;V)$，并利用该$T$和(b)对(a)中的结果给出证明。
+\item 考虑一个齐次线性方程组
+\[\left\{
+\begin{aligned}
+&a_{11}x_1 + &a_{12}x_2 +\cdots+&a_{1n}x_n =& 0\\
+&a_{21}x_1 + &a_{22}x_2 +\cdots+&a_{2n}x_n = &0\\
+&\cdots&\cdots&&\cdots\\
+&a_{m1}x_1 + &a_{m2}x_2 +\cdots+&a_{mn}x_n = &0\\
+\end{aligned}\right.
+\]
+记该线性方程组的系数矩阵为$A\in\mathbb{R}^{m\times n}, [A]_{ij}=a_{ij}$，$A$的第$j$列为$A_j,j=1,2,\cdots,n$，解空间为$U$，则$\mathrm{dim}\, U$与系数矩阵$A$有何关系？
+
+\end{enumerate}
+
+\noindent{} Solution. 
+\begin{enumerate}[(a)]
+\item $\mathrm{dim}\, U_1+U_2 = \mathrm{dim}\, U_1+\mathrm{dim}\, U_2 - \mathrm{dim}\, U_1\cap U_2. $
+\item $\mathrm{dim}\,V = \mathrm{dim}\, \mathrm{range}\,T+\mathrm{dim}\,\mathrm{null}\, T.$
+\item 逐一验证线性空间的性质即可。取$U_1$一组基$\{e_1,e_2,\cdots, e_{\mathrm{dim}\,U_1}\}$,$U_2$一组基$\{f_1,f_2,\cdots,f_{\mathrm{dim}\,U_2}\}$，那么说明
+$$\{(e_1,0),(e_2,0),\cdots, (e_{\mathrm{dim}\,U_1},0)\}\cup\{(0,f_1),(0,f_2),\cdots,(0,f_{\mathrm{dim}\,U_2})\}$$
+是$U_1\times U_2$的一组基即可知，
+\[\mathrm{dim}\,U_1\times U_2 = \mathrm{dim}\, U_1+\mathrm{dim}\,U_2. \]
+\item 容易验证$T$是线性映射，下面考虑其像与核:
+\[\mathrm{range}\,T = \{u_1+u_2|u_1\in U_1,u_2\in U_2\} = U_1+U_2,\]
+\[\mathrm{null}\,T =\{u_1+u_2 =0|u_1\in U_1,u_2\in U_2\}.\]
+实际上，$\mathrm{null}\,T =\{(u,-u)|u\in U_1\cap U_2\}$. 这是因为任意$(u_1,u_2)\in \mathrm{null}\,T$， 都有$-u_1\in U_2$，从而$u_1\in U_2$，因此可以写成$(u_1,-u_1)$，其中$u_1\in U_1\cap U_2$. 另一方面，对于任意$u\in U_1\cap U_2$，$T((u,-u))=0$. 由(b)可知，
+\[\mathrm{dim}\,U_1 +\mathrm{dim}\,U_2
+=\mathrm{dim}\,(U_1\times U_2) 
+= \mathrm{dim}\,\mathrm{range}\,T+ \mathrm{dim}\,\mathrm{null}\,T 
+= \mathrm{dim}\,U_1+\mathrm{dim}\,U_2 +\mathrm{dim}\,U_1\cap U_2.
+\]
+\item 考虑线性映射$T:\mathbb{F}^n\rightarrow \mathbf{F}^m, T(x) = Ax$， 那么
+\[\mathrm{null}\, T=U\quad ,\quad \mathrm{range}\,T = \mathrm{span}\,\{A_1,A_2,\cdots,A_n\}.\]
+由(b)可知，
+\[\mathrm{dim}\,U=\mathrm{dim}\,\mathrm{null}\,T = m-\mathrm{dim}\,\mathrm{span}\,\{A_1,A_2,\cdots,A_n\}.\]
+\end{enumerate}
+
+\bigskip
+
+\noindent{} Q3 (投影算子) 设$V$是有限维线性空间，$P\in\mathcal{L}(V)$，如果$P$满足$P^2 = P$，那么我们称其为投影算子。
+\begin{enumerate}[(a)]
+\item 设$V=U\oplus W$，证明$P_{U,W}$是投影算子。
+\item 证明：若$P\in\mathcal{L}(V)$是一投影算子，$\lambda$是$P$的特征值，则$\lambda=0$或$1$.
+\item 证明：若$P\in\mathcal{L}(V)$是一投影算子，则$P$可对角化。
+\item 证明$V$上所有的投影算子都可以写成(a)中的形式。
+\end{enumerate}
+
+\noindent{} Solution
+\begin{enumerate}[(a)]
+\item $P_{U,W}^2 = P_{U,W}$课上已经证明过。
+
+\item 设$\lambda$为$P$的特征值，$v$是对应的（非零）特征向量，那么$Pv=\lambda v$. 由于$P$是投影算子，两边同时用$P$作用，得到$Pv = P^2v=\lambda Pv$，即$(1-\lambda) Pv=0$. 由某道作业题，可知$1-\lambda=0$或$Pv=0$. 如果$1-\lambda=0$，就是$\lambda=1$; 如果$Pv=0$，由于$v$是对应于$\lambda$的特征向量，可知$\lambda=0$.
+
+\item 由于$P$是投影算子，$P(P-I)=0$，也就是说$\mathrm{range}\, (P-I) \subset \mathrm{null}\, P$. 由维数公式，
+\[\mathrm{dim}\, V = \mathrm{dim}\, \mathrm{range}\,(P-I)+\mathrm{dim}\,\mathrm{null}\,(P-I)\le \mathrm{dim}\, \mathrm{null}\,P+\mathrm{dim}\,\mathrm{null}\,(P-I).\]
+若$P$只有0特征值或1特征值，由上式可以看出$\mathrm{null}\,P=V$或$\mathrm{null}\,(P-I)=V$，$P$显然可以对角化。否则，由于0和1 都是$P$的特征值，$\mathrm{null}\,P \oplus \mathrm{null}\,(P-I)$是$V$的子空间，故
+\[\mathrm{dim}\, \mathrm{null}\,P+\mathrm{dim}\,\mathrm{null}\,(P-I)\le\mathrm{dim}\, V.\]
+结合上两式可知
+\[\mathrm{dim}\, \mathrm{null}\,P+\mathrm{dim}\,\mathrm{null}\,(P-I)=\mathrm{dim}\, V.\]
+这就说明了$P$可以对角化。
+
+\item 由(c)中的结论，$V =  \mathrm{null}\,(P-I)\oplus  \mathrm{null}\,P$. 对于任意$v\in V, v= v_1+v_2, v_1\in  \mathrm{null}\,(P-I), v_2 \in  \mathrm{null}\,P$，那么$P(v)=P(v_1)+P(v_2)=v_1$. 这就说明了$P = P_{ \mathrm{null}\,(P-I), \mathrm{null}\,P}$.
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,171 @@
+%!TEX program = xelatex
+\documentclass[a4paper]{article}
+\usepackage[unicode=true,colorlinks,urlcolor=blue,linkcolor=blue,citecolor=red,bookmarksnumbered=true]{hyperref}
+\usepackage{latexsym,amssymb,amsmath,amsbsy,amsopn,amstext,amsthm,amsxtra,color,multicol,bm,calc,ifpdf}
+% \usepackage{ctex}
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage{diagbox}   % 绘制表格斜线
+\usepackage{enumerate}
+\usepackage[numbers,authoryear]{natbib}
+\usepackage{fancyhdr}
+\usepackage{amsthm}
+\usepackage{subfig}
+\usepackage{listings}
+\lstset{language=Matlab,  % define the code language 
+frame=shadowbox,  % need a box, if not write none here 
+keywordstyle=\color[RGB]{40,40,255},  % color of keyword
+commentstyle=\it\color[RGB]{0,96,96},  % comment color
+}
+\usepackage{multirow}
+\usepackage{makeidx}
+\usepackage{xcolor}
+\usepackage{fontspec}
+\usepackage{algorithm}  
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{verbatim}
+\usepackage{float}
+\geometry{a4paper,scale=0.8}
+\usepackage{setspace}
+\graphicspath{{figures/}}  % 设置图片搜索路径
+
+\newcommand\diff{\,{\mathrm d}}     % 定义微分 d
+\newcommand{\p}[3]{\frac{\partial^{#1}#2}{\partial{#3}^{#1}}}  % 定义求偏导算子
+\newcommand{\ucite}[1]{\textsuperscript{\cite{#1}}}  % 参考文献引用: 上标用 \ucite{ }, 文中用 \cite{ }
+\newcommand\TT{^ \mathrm{T}}  % define transpose symbol
+\newcommand\re{\mathrm{e}}  % define transpose symbol
+\newcommand\spa{\mathrm{span}}  % define transpose symbol
+\newcommand\R{\mathbb{R}}  % define transpose symbol
+
+\renewcommand\contentsname{Contents}
+\renewcommand\abstractname{Abstract}
+\renewcommand\refname{References}
+\renewcommand\figurename{Figure}
+\renewcommand\tablename{Table}
+\renewcommand{\baselinestretch}{1}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{assumption}{Assumption}[section]
+\newtheorem{definition}{Definition}[section]
+
+\begin{document}
+
+
+\title{\textbf{线性代数期中参考题}}
+
+\author{孙浩然}
+\date{11-12}
+\maketitle
+
+% \section{补充}
+% \begin{enumerate}
+	% \item 
+	
+% 	例题:
+	% \begin{enumerate}
+	% 	\item 求证$\lim\limits_{n \to \infty} \| q \|^n = + \infty$, ($| q | > 1$).
+	% 	\item 若$\lim\limits_{n \to \infty} x_n = + \infty$, 则$\lim\limits_{n \to \infty} \dfrac{1}{x_n} = 0$.
+	% \end{enumerate}
+	
+% 	\item 性质
+% 	 \begin{enumerate}
+% 	  	\item 保号性
+% 	  	\item 保序性 
+% 	  	\item 有界性(证明)
+% 	\end{enumerate}
+% 	\item 四则运算\\
+% 	例题: 已知$\lim\limits_{n \to \infty} 2 x_n + 3 y_n = 5$, $\lim\limits_{n \to \infty} 5 x_n + y_n = 6$, 求$\lim\limits_{n \to \infty} 7 x_n + 4 y_n$.
+% 	\item 数列极限存在准则                                                                                                                                                    
+% 		\begin{enumerate}
+% 		 	\item 夹逼定理
+% 		 	\item 单调有界准则 
+% 		 \end{enumerate}
+% 	\item 重要极限: $\lim\limits_{n \to \infty} \left( 1 + \dfrac{1}{n} \right)^n = \mathrm e$ \\
+% 	% 例题: 求$\lim\limits_{n \to \infty} \left( 1 - \dfrac{1}{n} \right)^{n^2}$
+% 	\item 收敛数列的子列
+% \end{enumerate}
+% \section{练习}
+\begin{enumerate}
+	\item (子空间, 线性无关, 基, 直和)
+
+	设$U$是$\R^\infty$的一个子集, $U$中的元素$v$对所有$i$都满足$v_i + v_{i + 2} = v_{i + 1}$.
+		\begin{enumerate}[(1)]
+			\item 求证: $U$是$\R^\infty$的一个子空间.
+			\item 设$x, y \in U$, 满足: $x = (0, 1, 1, 0, -1, -1, 0, 1, 1, \cdots)$, $y = (1, 0, -1, -1, 0, 1, 1, 0, -1, \cdots)$. 求证: $x, y$线性无关.
+			\item 求证: $x, y$是$U$的一组基.
+			\item 设$W$是$\R^\infty$的一个子集, $W$中的元素满足$v_1 = 0$且$v_2 = 0$. 求证: $\R^\infty = U \oplus W$.
+		\end{enumerate}
+
+	\emph{Solution}:
+	\begin{enumerate}[(1)]
+		\item It suffices to verify the three properties: (i) $0 \in U$; (ii) closed under vector addition; (iii) closed under scalar multiplication, which is quite easy.
+		\item Suppose not. Then we can find $a, b \in \R$, s.t. $ax + by = 0$. Note that $ax + by = (b, a, \cdots)$. If $ax + by = 0$ then $b = 0$ and $a = 0$ since two sequences are equal iff their terms are all equal. This means that $x$ and $y$ are linearly independent.
+		\item Since we have already shown that $(x, y)$ is a linearly independent set, we just need to show that it spans $U$. It's easy to see $\spa \{x, y\} \subseteq U$, next we show $U \subseteq \spa\{x, y\}$. In fact, let $u \in U$. Write $u = (u_1, u_2, \cdots)$. Then we claim that $u = u_1y + u_2 x$. We can show that all the terms of $u$ and $u_1y + u_2x$ match up by induction (omitted).
+		\item $\R^\infty = U \oplus W$ iff $\R^\infty = U + W$ and $U \cap W = \{ 0\}$. It's easy to see $U+W \subseteq \R^\infty$. we need to show that any sequence can be written as the sum of an element of $U$ and an element of $W$. Let $x = (x_1, x_2, \cdots) \in \R^\infty$. Let $u = (x_1, x_2, x_2 - x_1, -x_2, x_1 - x_2, x_1, x_2, \cdots)$ be the element of $U$ that starts with $x_1$ and $x_2$. Let $w = x - u$. Since $u$ and $x$ have the same first and second term, $w = (0, 0, w_3, w_4, \cdots)$. So $w \in W$. Thus, $\R^\infty = U + W$.\\
+		To show $U \cap W = \{ 0\}$, suppose $v \in U \cap W$. We will show that $v = 0$ by induction. Write $v = (v_1, v_2, \cdots)$. Since $v \in W$, $v_1 = v_2 = 0$. Suppose $v_{n - 1} = v_n = 0$. Then we need to show that $v_{n+1} = 0$. Since $v_{n+1} = v_n - v_{n-1}$, we have that $v_{n+1} = 0$. So by induction, $v = 0$. Therefore, $U \cap W = \{ 0\}$.
+	\end{enumerate}
+	
+	\item (线性变换与多项式空间)\\
+	考虑一个线性变换$T \in \mathcal{L}(P_{2}(\R), P_{3} (\R))$. 假设我们知道$T$的部分信息如下:
+	\[
+	T(x^2+1) = x^2 - x,
+	\]
+	\[
+	T(1) = 2x + 1.
+	\]
+	基于以上信息, 回答问题, 简要给出证明或举出反例.
+	\begin{enumerate}[(1)]
+		\item $T$可能是单射吗?
+		\item $T$可能是满射吗?
+		\item 我们能够确定 $T(x^2 + x + 1)$吗? 
+		\item 我们能够确定 $x^2 + 3x + 2 \in \mathrm{Range}\,(T)$吗?
+	\end{enumerate}
+
+	\emph{Solution}:
+	\begin{enumerate}[(1)]
+		\item Yes. For example, consider the transformation $T$ defined by the formula $T(ax^2 + bx + c = ax^2 + (b - 3a + 2c) x + (c - a)$. We can easily check: $T(x^2+1) = x^2 - x$ and $T(1) = 2x + 1$. To show this map is injective, we note that if $ax^2 + bx + c \in \mathrm{Null}\,T$, we must have $a=0, b - 3a + 2c = 0, c - a = 0$. Therefore $\mathrm{Null}(T) = 0$ and $T$ is injective.
+		\item No. We know that dim$\,P_2(\R) = 3$ and dim$\,P_3(\R) = 4$. Corollary 3.6 (on page 46) states that $T: V \to W$ cannot be surjective if dim$\, V <$ dim$\, W$.
+		\item No. For the $T$ defined in (1), we have $T(x^2 +x+1) = x^2$. But if we define $T(ax^2 +bx+c) = bx^3 +ax^2 + (-3a+2c)x + (c - a)$ (which can be shown reasonable easily), we have $T(x^2 + x +1) = x^3 + x^2 - x$.
+		\item Yes. $T(x^2 + 2) = T(x^2 +1 + 2) = x^2 - x + 2(2x + 1) = x^2+3x+1$.
+	\end{enumerate}
+	
+	
+	\item (特征值与特征向量, 对角化)\\
+	设$V$是一个有限维向量空间, 且dim$\,V = n$. 设$S \in \mathcal{L}(V)$是$V$上的线性算子, 且有$n$个不同的特征值. 设$T \in \mathcal{L}(V)$是另一个线性算子. 求证: 如果$ST = TS$, 那么$T$ 可对角化.
+
+	\emph{Solution}:
+	Firstly, we prove:\\
+	\textbf{Lemma 1}: If $v$ is an eigenvector for $S$ with eigenvalue $\lambda$, then $Tv$ is also an eigenvector for $S$ with eigenvalue $\lambda$ (or Tv = 0). PROOF: set $w = Tv$, then $Sw = STv = TSv = T(\lambda v) = \lambda Tv = \lambda w$.
+	We now turn to the assumption that $S$ has $n$ distinct eigenvalues. Let $\lambda_1, \cdots, \lambda_n$ be the $n$ eigenvalues of $S$, and let $v_1, \cdots, v_n$ be the corresponding eigenvectors (so $S(v_k) = \lambda_k v_k$). The vectors $v_1, \cdots, v_n$ are linearly independent, since eigenvectors whose eigenvalues are distinct are linearly independent. Since dim$\,V = n$, these $n$ vectors form a basis for V. We next prove:\\
+	\textbf{Lemma 2}: If $u \in V$ satisfies $S(u) = \lambda_k u$, then $u = cv_k$ for some $c \in \mathbf{F}$. PROOF: we note that $v_1, \cdots, v_n$ is a basis of $V$, any $u \in V$ can be written as $u = c_1 v_1 + \cdots + c_n u_n$. We can compute $S(u)$ as $S(u) = c_1 S(v_1) + \cdots c_n S(v_n) = c_1 \lambda_1 v_1 + \cdots + c_n \lambda_n v_n$. If we also assume that $S(u) = \lambda_k u$, then $S(u) = c_1 \lambda_k v_1 + \cdots + c_n \lambda_k v_n$. Subtracting the latter equation from the former gives $0 = c_1 (\lambda_1 - \lambda_k) v_1 + \cdots + c_n (\lambda_n - \lambda_k)v_n$. So we conclude that $c_i = 0$ for all $i$ other than $k$, which is the desired result.\\
+	We now prove the claim that $T$ is diagonalizable by showing that $v_1, \cdots, v_n$ is an eigenbasis for $T$. Consider a single vector $v_k$ from this basis, which is an eigenvector of $S$ with eigenvalue $\lambda_k$. By Lemma 1, we know that $Tv_k$ is an eigenvector of S with eigenvalue $\lambda_k$, or else $Tv = 0$; in either case, it satisfies $S(Tv_k) = \lambda_k Tv_k$. Therefore by Lemma 2, we see that $Tv_k = cv_k$ for some $c \in \mathbf{F}$. In other words, $v_k$ is an eigenvector of $T$ (since it is nonzero). Therefore $v_1, \cdots, v_n$ is an eigenbasis for $T$, so $T$ is diagonalizable.\\
+	\textbf{\underline{Remark}}: To make the problem much easier, we can divide it into three parts, lemma 1, lemma 2 and the final conclusion.
+
+	\item (可逆映射, 对角化)
+
+	设$V$是有限维的向量空间, 且$T\in \mathcal{L(V)}$. 假设$\mathrm{Range}(T) \not = \mathrm{Range}(T^2)$.
+	\begin{enumerate}[(1)]
+		\item 求证: $T$不可以对角化.
+		\item 以下说法正确的是?
+		\begin{enumerate}[(i)]
+			\item $T$一定可逆.
+			\item $T$一定不可逆.
+			\item $T$可能可逆也可能不可逆.
+		\end{enumerate}
+		证明你的结论.
+		\end{enumerate}
+	
+		\emph{Solution}:
+		\begin{enumerate}[(1)]
+			\item If $T$ is diagonalizable, then there exists a basis $v_1, \cdots, v_n$ for $V$ s.t. $T(v_i) = \lambda_i v_i$ for all $i = 1, \cdot, n$. For each $i$, let $c_i = \dfrac{1}{\lambda_i}$ if $\lambda_i \not =0$ and $0$ if $\lambda_i = 0$. Note that in either case we have $c_i \lambda_i^2 = \lambda_i$. We know that $\mathrm{Range}(T^2) \subset \mathrm{Range}(T)$. We will prove that $\mathrm{Range}(T) \subset \mathrm{Range}(T^2)$. Assume that $w \in \mathrm{Range}(T)$, so we can write $w = T(v)$ for some $v \in V$. Since $v_1, \cdots, v_n$ is a basis for $V$, we can write $v = a_1 v_1 + \cdots + a_n v_n$. Now we have $w = a_1 \lambda_1 v_1+ \cdots + a_n \lambda_n v_n$. Now define $u = a_1 c_1 v_1+ \cdots + a_n c_n v_n$. I claim that $T^2(u) = w$.(omit the proof) We conclude $w \in \mathrm{Range}(T^2)$. Since $w$ was an arbitrary element of $\mathrm{Range}(T)$, this shows that $\mathrm{Range}(T) \subset \mathrm{Range}(T^2)$. Combined with $\mathrm{Range}(T^2) \subset \mathrm{Range}(T)$, this implies that $\mathrm{Range}(T) = \mathrm{Range}(T^2)$, contradicting the hypothesis of the question. Therefore $T$ must not be diagonalizable.
+			\item (ii) is right. If $T$ is invertible, then $T$ must be surjective, so $\mathrm{Range}(T) =V$. Separately, if $T$ is invertible, then so is $T^2$.(Its inverse is given by $(T^{-1})^2$.) But if $T^2$ is invertible, then it is surjective, and so $\mathrm{Range}(T^2) = V$ as well. This contradicts the hypothesis of the question.
+		\end{enumerate}
+		
+	
+\end{enumerate}
+
+\end{document}
+

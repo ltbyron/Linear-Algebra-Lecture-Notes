@@ -1,0 +1,450 @@
+\documentclass[a4[paper]{article}
+\textheight 23.5cm \textwidth 15.8cm
+%\leftskip -1cm
+\topmargin -1.5cm \oddsidemargin 0.3cm \evensidemargin -0.3cm
+%\documentclass[final]{siamltex}
+
+\usepackage{verbatim}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{amsmath}
+\usepackage{CTeX}
+\usepackage{enumerate}   
+\usepackage{comment}
+
+\newcommand\TT{^ \mathrm{T}}  % define transpose symbol
+\newcommand\re{\mathrm{e}}  % define transpose symbol
+\newcommand\spa{\mathrm{span}}  % define transpose symbol
+\newcommand\R{\mathbb{R}}  % define transpose symbol
+\def\dim{\mathrm{dim}\,}
+\def\range{\mathrm{range}\,}
+\def\Null{\mathrm{null}\,}
+\def\span{\mathrm{span}\,}
+\def\sep{\bigskip
+\noindent{}\rule{\textwidth}{0.1mm}
+\bigskip}
+
+\title{\bf 线性代数第四次习题课}
+\author{李弢}
+\date{2019年11月14日}
+
+\begin{document}
+\maketitle
+\section{作业题选讲}
+\noindent{} 1. 设$T\in\mathcal{L}(V)$，$\dim\range T=k$，证明$T$最多有$k+1$个互不相同的特征值。
+
+\smallskip
+
+\noindent{}\emph{Solution:} 利用反证法，假设$T$有$m$个互不相同的特征值，$m\ge k+2$，那么$T$互不相同的\underline{非零}特征值{\bf 至少}有$m-1=k+1$个。取$\lambda_1,\lambda_2,\cdots,\lambda_{k+1}$是$T$的非零特征值，$v_1,v_2,\cdots,v_{k+1}$为对应的特征向量，那么由$Tv_j =\lambda_j v_j$可知$\span\{v_1,v_2,\cdots,v_{k+1}\} \subset\range T$，而前者维数为$k+1$，后者维数为$k$，矛盾！因此$T$最多有$k+1$个互不相同的特征值。
+
+\sep
+
+\noindent{}2. 设$S,T\in\mathcal{L}(V)$，证明$ST$和$TS$有相同的特征值。
+
+\smallskip
+
+\noindent{}\emph{Solution:} 设$\lambda$ 是$ST$的特征值，$v$是对应的特征向量，即$STv = \lambda v$，那么两边同时用$T$作用，可知$TS(Tv) = \lambda (Tv)$. 由特征值的定义，还需考虑$Tv$是否为0. 如果$Tv\ne 0$，那么显然$Tv$是$TS$的特征向量，对应的特征值为$\lambda$; 如果$Tv=0$，那么$\lambda v= S(Tv)=0\Rightarrow \lambda=0$. 这种情况下，只需要说明$\lambda=0$也是$TS$的特征值即可，这就等价于说明$TS$不是单射。由于$T$不是单射(因为$Tv=0,v\ne0$)，可知$T$不是满射，因而$TS$不是满射，由此即知$TS$不是单射，故证得。
+
+\sep
+
+\noindent{}3. 设$T\in\mathcal{L}(V)$，并且$V$中每个向量都是$T$的本征向量。证明$T$是恒等算子的标量倍。
+
+\smallskip
+
+\noindent{}\emph{Solution:} 随意取$V$的一组基$\{v_1,v_2,\cdots,v_n\}$，由于$V$中每个向量都是$T$的本征向量，有$Tv_j = \lambda_j v_j, j= 1,2,\cdots,n$. 我们现在来证明$v_i=v_j, \forall i,j=1,2,\cdots,n$. 只需考虑$v_i+v_j$，它也是$T$的本征向量，即存在$\lambda_{ij}$使得$T(v_i+v_j) = \lambda_{ij}(v_i+v_j)$. 另一方面，$T(v_i+v_j) = \lambda_i v_i +\lambda_j v_j$，因此$(\lambda_{ij}-\lambda_i) v_i +(\lambda_{ij}-\lambda_j)v_j=0$，由于$v_i,v_j$线性无关，$\lambda_i=\lambda_j=\lambda_{ij}$. 这样就证得了$\lambda_1=\lambda_2=\cdots=\lambda_n$，即$T$是恒等算子的标量倍。
+
+\sep
+
+\noindent{}4. 设$T\in\mathcal{L}(V)$，并且$V$的每个$\dim V-1$维子空间在$T$下都是不变的，证明$T$是恒等算子的标量倍。
+
+\smallskip
+
+\noindent{}\emph{Solution:} 我们用数学归纳法证明：V的每个$\dim V-k$维子空间在$T$下都是不变的，其中$k=1,2,\cdots,\dim V-1$. 当$k=1$时，即是已知条件。假设当$k$时成立，我们考虑$k+1$时，对于$V$的任意一个$\dim V - (k+1)$维子空间$V'$，取其一组基$\{v_1,v_2,\cdots,v_{\dim V-(k+1)}\}$，并添加上$u_1,u_2,\cdots,u_{k+1}$，将其扩充为$V$的一组基。考虑
+$$V_1 = \span\{v_1,v_2,\cdots,v_{\dim V-(k+1)},u_1\},V_1 = \span\{v_1,v_2,\cdots,v_{\dim V-(k+1)},u_2\},$$
+它们都是$\dim V-k$维子空间，由归纳假设可知都是$T$的不变子空间，因而它们的交也是不变子空间，而$V_1\cap V_2 = \span \{v_1,v_2,\cdots,v_{\dim V-(k+1)}\}=V'$，故$V'$也是$T$的不变子空间。特别地，我们知道$V$的所有1维子空间均是$T$的不变子空间，也就是说$V$的每个向量都是$T$的本征向量，因此$T$是恒等算子的常数倍。
+
+\sep
+
+\noindent{}5. 设$S,T\in\mathcal{L}(V)$，并且$S$是可逆的，证明若$p\in\mathcal{P}(\mathbf{F})$是多项式，则$p(STS^{-1})=Sp(T)S^{-1}$.
+
+\smallskip
+
+\noindent{}\emph{Solution:} 由 $(STS^{-1})^n = STS^{-1} STS^{-1}\cdots STS^{-1} = ST^nS^{-1}$即得。
+
+\sep
+
+\noindent{}6. 设$\mathbf{F}=\mathbb{C},T\in\mathcal{L}(V),p\in\mathcal{P}(\mathbb{C}),a\in\mathbb{C}$. 证明$a$是$p(T)$的特征值当且仅当对于$T$的某个特征值$\lambda$有$a = p(\lambda)$.
+
+\smallskip
+
+\noindent{}\emph{Solution:}由于所考虑的空间是复向量空间，因此存在$V$的某组基，在这组基的表示下$T$的矩阵$M(T)$是一个上三角矩阵，且由命题5.18可知该上三角矩阵的对角元就是$T$的特征值。根据矩阵乘法的定义与线性映射复合的关系，有$p(M(T))=M(p(T))$，也就是说在这组基的选取下$p(T)$的矩阵表示就是$p(M(T))$，下面我们来看$p(M(T))$是什么。特别地，我们只需要关注$p(x)=x^n$的特殊情况，因为任何多项式都可以写成单项式的线性组合。我们用数学归纳法证明，$M(T)^n$仍是上三角矩阵，且第$i$个对角元为$M(T)_{i,i}^n$. 当$n=1$时结论是显然的，现在假设$n$时成立，考虑$n+1$时。
+
+\begin{itemize}
+\item $M(T)^{n+1}$是上三角矩阵：对于$i>j$， 
+$$M(T)^{n+1}_{i,j} = \sum_{k=1}^n M(T)^n_{i,k}M(T)_{k,j} =\sum_{k=1}^i M(T)^n_{i,k}M(T)_{k,j} + \sum_{k=i+1}^n M(T)^n_{i,k}M(T)_{k,j}.$$
+当$k\le i$时，$M(T)^n{i,k}=0$; 当$k\ge i+1$时，$M(T)_{k,j}=0$. 因此$M(T)^{n+1}_{i,j} =0$，即$M(T)^{n+1}$是上三角矩阵
+
+\item 
+\[M(T)^{n+1}_{i,i} = \sum_{k=1}^n  M(T)^n_{i,k}M(T)_{k,i}=  M(T)^n_{i,i}M(T)_{i,i} = M(T)_{i,i}^{n+1}.\]
+\end{itemize}
+综上，我们可知$p(M(T))$是上三角矩阵，且对角元$p(M(T))_{i,i}= p (M(T)_{i,i})$，这就证明了题目中的结果。
+
+\sep
+
+\noindent{} 7. 证明前一个习题的结果对于$\mathbf{F}=\mathbb{R}$不成立。
+
+\smallskip
+
+\noindent{}\emph{Solution:} 考虑$\R^2$上的旋转(90度)映射：$T(x,y) = (y,-x)$，它没有特征值，但$T^2 = -\mathrm{Id}$有特征值$-1$.
+
+\sep 
+
+\noindent{} 8.给出一个可逆算子，使得该算子关于某个基的矩阵的对角线上只有$0$.
+
+\smallskip
+
+\noindent{} \emph{Solution:} 上题中的例子在标准基下即是。
+
+\sep
+
+\noindent{} 9. 给出一个不可逆算子，使得该算子关于某个基的矩阵的对角线上的数都非零。
+
+\smallskip
+
+\noindent{}\emph{Solution:} 考虑$\R^2, T((x,y)) = (x+y,x+y)$，那么$T$在标准基下的矩阵元素全为1. 
+
+
+\section{期中考试备选题讲解}
+\noindent{} Q1. (线性空间)
+\begin{enumerate}[(a).]
+\item 给定集合$\mathbb{R}_{++}=\{x>0|x\in\mathbb{R}\}$ 及其上面的加法运算与数乘运算：
+\[x+y = xy\quad, \quad\lambda x= x^{\lambda}.\]
+问$\mathbb{R}_{++}$在上述加法与数乘的意义下是否构成一线性空间？若不是，请说明理由；若是，请验证，并求出维数，并进一步给出它到$\mathbb{R}^{\mathrm{dim}\, \mathbb{R}_{++}}$的一个可逆线性映射。
+\item 任给一线性空间$V$，我们把$\mathcal{L}(V;\mathbb{F})$称为$V$的对偶空间，可记作$V^*$. 设$V$是有限维的，$\{v_1,v_2,\cdots,v_n\}$是一组基，定义$v_i^*\in V^*$，
+\[v_i^*:V\rightarrow \mathbb{F}, v_i^*(v_j) = \delta_{ij},\quad\forall i,j=1,2,\cdots,n,\]
+其中$\delta_{ij}$当且仅当$i=j$时为1，否则为0. 求证$\{v_1^*,v_2^*,\cdots,v_n^*\}$是$V^*$的一组基。
+\item 对于$V$的对偶空间$V^*$，我们还可以考虑它的对偶空间$V^{**}$. 证明，$V$是$V^{**}$子空间。特别地，当$V$为有限维空间时，$V=V^{**}$. 
+\end{enumerate}
+
+\noindent{} \emph{Solution:}
+\begin{enumerate}[(a).]
+\item 根据定义可以验证这是一个线性空间，其加法单位元为$1$，维数为1。对数映射$\log:\mathbb{R}_{++}\rightarrow \mathbb{R}$ 是一可逆线性映射:
+\[\log(\lambda x+\mu y) =\log(x^{\lambda}y^{\mu})=\lambda \log(x)+\mu\log(y).\]
+其逆为$\exp: \mathbb{R}\rightarrow\mathbb{R}_{++}$.
+
+\item 首先注意到若$v=\sum_{j=1}^n\lambda_j v_j$，那么
+\[v_i^*(v) = v_i^*(\sum_{j=1}^n\lambda_j v_j)=\sum_{j=1}^n\lambda_j v_i^*(v_j)=\lambda_i.\]
+我们先说明$\{v_1^*,v_2^*,\cdots,v_n^*\}$是$V^*$的张成组。任意$l \in V^*, v\in V$，有
+\[l(v) = l(\sum_{i=1}^n \lambda_i v_i) = \sum_{i=1}^n\lambda_i l (v_i) =  \sum_{i=1}^n l (v_i) v_i^*(v),\]
+这就说明了任意$l \in V^*$都可以由$\{v_1^*,v_2^*,\cdots,v_n^*\}$线性表示。
+
+再来说明$\{v_1^*,v_2^*,\cdots,v_n^*\}$是线性无关的。设存在$\lambda_1,\lambda_2,\cdots,\lambda_n$使得$\sum_{i=1}^n\lambda_i v_i^*=0$，那么作用在$v_j,j=1,2,\cdots,n$上可知$\lambda_j=0$，进而说明了它们线性无关。
+
+因此$\{v_1^*,v_2^*,\cdots,v_n^*\}$ 是$V^*$的一组基。特别地，若$V$是有限维线性空间，$V^*$也是有限维线性空间，且维数与$V$相等。
+
+\item 任取$v\in V$，可以将其视为$V^*$上的线性函数：$v(l) = l(v)$. 这样定义的函数确实是线性的：
+\[v(\lambda l_1+\mu l_2) = (\lambda l_1+\mu l_2)(v) = \lambda l_1(v)+\mu l_2(v)=\lambda v(l_1)+\mu v(l_2).\] 
+这就说明了$V$是$V^{**}$的子空间。若$V$是有限维的，那么由$(b)$可知，$\mathrm{dim}\, V^* = \mathrm{dim}\, V$，再一次利用(b)可知$\mathrm{dim}\, V^{**}=\mathrm{dim}\, V^* = \mathrm{dim}\,V$， 由此可知$V^{**}=V$.
+\end{enumerate} 
+
+\bigskip
+\noindent{}\rule{\textwidth}{0.1mm}
+\bigskip
+
+\noindent{} Q2. (子空间, 线性无关, 基, 直和) 设$U$是$\R^\infty$的一个子集, $U$中的元素$v$对所有$i$都满足$v_i + v_{i + 2} = v_{i + 1}$.
+\begin{enumerate}[(a).]
+	\item 求证: $U$是$\R^\infty$的一个子空间.
+	\item 设$x, y \in U$, 满足: $x = (0, 1, 1, 0, -1, -1, 0, 1, 1, \cdots)$, $y = (1, 0, -1, -1, 0, 1, 1, 0, -1, \cdots)$. 求证: $x, y$线性无关.
+	\item 求证: $x, y$是$U$的一组基.
+	\item 设$W$是$\R^\infty$的一个子集, $W$中的元素满足$v_1 = 0$且$v_2 = 0$. 求证: $\R^\infty = U \oplus W$.
+\end{enumerate}
+
+\noindent{}\emph{Solution:}
+\begin{enumerate}[(a).]
+		\item 显然$0 \in U$. 如果$u,v\in\R^\infty$满足$u_i+u_{i+2}=u_{i+1},v_i+v_{i+2}=v_{i+1}$，那么显然也有$(u_i+v_i)+(u_{i+2}+v_{i+2})=(u_{i+1}+v_{i+1}), \lambda u_1+\lambda u_{i+2} = \lambda u_{i+1}$. 因此$U$是$\R^\infty$的一个子空间。
+		\item 设$\lambda x+\mu y=0$，那么考察$\lambda x+\mu y$的前两个位置，必须有$\lambda=0,\mu=0$，这就说明了$x,y$线性无关。
+		\item 我们已经证明了$x,y$线性无关，为说明它们是$U$的基，只需证明它们是$U$的张成组。对于任何$v\in U$，实际上$v$仅由其前两个元素$v_1,v_2$决定，其他元素必须满足
+\[v_3=v_2-v_1,v_4 = v_3-v_2 = -v_1,v_5 = v_4-v_3 = -v_2,v_6=v_5-v_4=-(v_2-v_1),...\]
+因此，只需要将$v$的前两个元素写成$x,y$前两个元素的线性组合即可知$v = v_1 y+ v_2 x$. 严格来说，也可以用数学归纳法去证明。
+		\item 为说明$\R^\infty=U\oplus W$，我们要说明$U+W=\R^\infty$且$U\cap W=\{0\}$. 后者是显然的，设$v\in W\cap U$，那么由上一小问可知$v =v_1x+v_2y$，但又因$v\in W$，$v_1=v_2=0$，所以$v=0$. 再证$U+W=\R^\infty$，$U+W\subset\R^\infty$是显然的，只需证明任何$v\in\R^\infty$，总存在$u\in U,w\in W$使得$v = u+w$. 实际上，定义$u = v_1 x+v_2y$，那么$u\in U$是显然的。再令$w = v-u$，那么$w_1 = v_1-u_1 =0, w_2=v_2-u_2=0$，因此$w\in W$. 综上，$\R^\infty=U\oplus W$.
+\end{enumerate}
+
+\bigskip
+\noindent{}\rule{\textwidth}{0.1mm}
+\bigskip
+
+\noindent{} Q3. (维数公式)
+\begin{enumerate}[(a).]
+\item 设$V$是有限维线性空间，$U_1,U_2$是$V$的子空间，那么有怎样的维数公式（不用证明）？
+\item 设$V,W$是有限维线性空间，$T\in\mathcal{L}(V;W)$是从$V$到$W$的线性映射，记$T$的像与核分别为$\mathrm{range}\,T$与$\mathrm{null}\,T$，那么有怎样的维数公式（不用证明）?
+\item 给定两个线性空间$U_1,U_2$，我们定义它们的笛卡尔积$U_1\times U_2=\{(u_1,u_2),u_1\in U_1,u_2\in U_2\}$，定义加法运算和数乘运算为
+\[(u_1,u_2)+(u_1',u_2')=(u_1+u_1',u_2+u_2')\quad,\quad \lambda(u_1,u_2)=(\lambda u_1,\lambda u_2).\]
+请验证$U_1\times U_2$是一个线性空间。若$U_1,U_2$均是有限维，再求$U_1\times U_2$的维数。
+\item 设$V$是有限维线性空间，$U_1,U_2$是$V$的子空间，考虑$T:U_1\times U_2\rightarrow V, T((u_1,u_2))=u_1+u_2$. 证明$T\in\mathcal{L}(U_1\times U_2;V)$，并利用该$T$和(b)对(a)中的结果给出证明。
+\item 考虑一个齐次线性方程组
+\[\left\{
+\begin{aligned}
+&a_{11}x_1 + &a_{12}x_2 +\cdots+&a_{1n}x_n =& 0\\
+&a_{21}x_1 + &a_{22}x_2 +\cdots+&a_{2n}x_n = &0\\
+&\cdots&\cdots&&\cdots\\
+&a_{m1}x_1 + &a_{m2}x_2 +\cdots+&a_{mn}x_n = &0\\
+\end{aligned}\right.
+\]
+记该线性方程组的系数矩阵为$A\in\mathbb{R}^{m\times n}, [A]_{ij}=a_{ij}$，$A$的第$j$列为$A_j,j=1,2,\cdots,n$，解空间为$U$，则$\mathrm{dim}\, U$与系数矩阵$A$有何关系？
+
+\end{enumerate}
+
+\noindent{}\emph{Solution:}
+\begin{enumerate}[(a).]
+\item $\mathrm{dim}\, U_1+U_2 = \mathrm{dim}\, U_1+\mathrm{dim}\, U_2 - \mathrm{dim}\, U_1\cap U_2. $
+\item $\mathrm{dim}\,V = \mathrm{dim}\, \mathrm{range}\,T+\mathrm{dim}\,\mathrm{null}\, T.$
+\item 逐一验证线性空间的性质即可。取$U_1$一组基$\{e_1,e_2,\cdots, e_{\mathrm{dim}\,U_1}\}$,$U_2$一组基$\{f_1,f_2,\cdots,f_{\mathrm{dim}\,U_2}\}$，那么说明
+$$\{(e_1,0),(e_2,0),\cdots, (e_{\mathrm{dim}\,U_1},0)\}\cup\{(0,f_1),(0,f_2),\cdots,(0,f_{\mathrm{dim}\,U_2})\}$$
+是$U_1\times U_2$的一组基即可知，
+\[\mathrm{dim}\,U_1\times U_2 = \mathrm{dim}\, U_1+\mathrm{dim}\,U_2. \]
+\item 容易验证$T$是线性映射：
+\[T(\lambda (u_1,u_2) +\mu (v_1,v_2)) = T((\lambda u_1+\mu v_1,\lambda u_2+\mu v_2)) = \lambda u_1+\mu v_1+\lambda u_2+\mu v_2 = \lambda T((u_1,u_2))+\mu T((v_1,v_2)).\]
+下面考虑其像与核:
+\[\mathrm{range}\,T = \{u_1+u_2|u_1\in U_1,u_2\in U_2\} = U_1+U_2,\]
+\[\mathrm{null}\,T =\{u_1+u_2 =0|u_1\in U_1,u_2\in U_2\}.\]
+实际上，$\mathrm{null}\,T =\{(u,-u)|u\in U_1\cap U_2\}$. 这是因为任意$(u_1,u_2)\in \mathrm{null}\,T$， 都有$-u_1=u_2\in U_2$，从而$u_1\in U_2$，因此可以写成$(u_1,-u_1)$，其中$u_1\in U_1\cap U_2$. 另一方面，对于任意$u\in U_1\cap U_2$，$T((u,-u))=0$. 由(b)可知，
+\[\mathrm{dim}\,U_1 +\mathrm{dim}\,U_2
+=\mathrm{dim}\,(U_1\times U_2) 
+= \mathrm{dim}\,\mathrm{range}\,T+ \mathrm{dim}\,\mathrm{null}\,T 
+= \mathrm{dim}\,U_1+\mathrm{dim}\,U_2 +\mathrm{dim}\,U_1\cap U_2.
+\]
+\item 考虑线性映射$T:\mathbb{F}^n\rightarrow \mathbf{F}^m, T(x) = Ax$， 那么
+\[\mathrm{null}\, T=U\quad ,\quad \mathrm{range}\,T = \mathrm{span}\,\{A_1,A_2,\cdots,A_n\}.\]
+由(b)可知，
+\[\mathrm{dim}\,U=\mathrm{dim}\,\mathrm{null}\,T = m-\mathrm{dim}\,\mathrm{span}\,\{A_1,A_2,\cdots,A_n\}.\]
+\end{enumerate}
+
+\bigskip
+\noindent{}\rule{\textwidth}{0.1mm}
+\bigskip
+
+\noindent{} Q4. (线性变换与多项式空间)\\
+	考虑一个线性变换$T \in \mathcal{L}(\mathcal{P}_{2}(\R), \mathcal{P}_{3} (\R))$. 假设我们知道$T$的部分信息如下:
+	\[
+	T(x^2+1) = x^2 - x,
+	\]
+	\[
+	T(1) = 2x + 1.
+	\]
+	基于以上信息, 回答问题, 简要给出证明或举出反例.
+	\begin{enumerate}[(a).]
+		\item $T$可能是单射吗?
+		\item $T$可能是满射吗?
+		\item 我们能够确定 $T(x^2 + x + 1)$吗? 
+		\item 我们能够确定 $x^2 + 3x + 2 \in \mathrm{Range}\,(T)$吗?
+	\end{enumerate}
+
+\noindent{}\emph{Solution:}
+\begin{enumerate}[(a).]
+		\item $T$可能是单射。我们可以考虑$\mathcal{P}_2(\R)$的一组基$\{1,x,x^2\}$，那么已知条件为$T(1)=2x+1,T(x^2)=x^2-x-2x-1=x^2-3x-1$. 如果$T(x)=x$，那么$T(ax^2+bx+c) = ax^2+(2c+b-3a)x+c-a=0$可知$a=b=c=0$，即$\mathrm{null}\, T\=\{0\}$，说明$T$是单射。
+		\item $T$不可能是满射。这是因为$3 = \dim \mathcal{P}_2(\R) = \dim \mathrm{range}\, T+ \dim \mathrm{null}\, T$，由此可知$\dim \mathrm{range}\, T\le 3<\dim \mathcal{P}_3(\R)$.
+		\item 不能确定，这与$T$作用于$x$上的结果有关。
+		\item 可以确定，因为$T(x^2+2) = x^2+3x+2$.
+\end{enumerate}
+
+\bigskip
+\noindent{}\rule{\textwidth}{0.1mm}
+\bigskip
+
+\noindent{} Q5. (投影算子) 设$V$是有限维线性空间，$P\in\mathcal{L}(V)$，如果$P$满足$P^2 = P$，那么我们称其为投影算子。
+\begin{enumerate}[(a).]
+\item 设$V=U\oplus W$，证明$P_{U,W}$是投影算子。
+\item 证明：若$P\in\mathcal{L}(V)$是一投影算子，$\lambda$是$P$的特征值，则$\lambda=0$或$1$.
+\item 证明：若$P\in\mathcal{L}(V)$是一投影算子，则$P$可对角化。
+\item 证明$V$上所有的投影算子都可以写成(a)中的形式。
+\end{enumerate}
+
+\noindent{} \emph{Solution:}
+\begin{enumerate}[(a).]
+\item $P_{U,W}^2 = P_{U,W}$课上已经证明过。
+
+\item 设$\lambda$为$P$的特征值，$v$是对应的（非零）特征向量，那么$Pv=\lambda v$. 由于$P$是投影算子，两边同时用$P$作用，得到$Pv = P^2v=\lambda Pv$，即$(1-\lambda) Pv=0$. 由某道作业题，可知$1-\lambda=0$或$Pv=0$. 如果$1-\lambda=0$，就是$\lambda=1$; 如果$Pv=0$，由于$v$是对应于$\lambda$的特征向量，可知$\lambda=0$.
+
+\item 由于$P$是投影算子，$P(P-I)=0$，也就是说$\mathrm{range}\, (P-I) \subset \mathrm{null}\, P$. 由维数公式，
+\[\mathrm{dim}\, V = \mathrm{dim}\, \mathrm{range}\,(P-I)+\mathrm{dim}\,\mathrm{null}\,(P-I)\le \mathrm{dim}\, \mathrm{null}\,P+\mathrm{dim}\,\mathrm{null}\,(P-I).\]
+若$P$只有0特征值或1特征值，由上式可以看出$\mathrm{null}\,P=V$或$\mathrm{null}\,(P-I)=V$，$P$显然可以对角化。否则，由于0和1 都是$P$的特征值，$\mathrm{null}\,P \oplus \mathrm{null}\,(P-I)$是$V$的子空间，故
+\[\mathrm{dim}\, \mathrm{null}\,P+\mathrm{dim}\,\mathrm{null}\,(P-I)\le\mathrm{dim}\, V.\]
+结合上两式可知
+\[\mathrm{dim}\, \mathrm{null}\,P+\mathrm{dim}\,\mathrm{null}\,(P-I)=\mathrm{dim}\, V.\]
+这就说明了$P$可以对角化。
+
+\item 由(c)中的结论，$V =  \mathrm{null}\,(P-I)\oplus  \mathrm{null}\,P$. 对于任意$v\in V, v= v_1+v_2, v_1\in  \mathrm{null}\,(P-I), v_2 \in  \mathrm{null}\,P$，那么$P(v)=P(v_1)+P(v_2)=v_1$. 这就说明了$P = P_{ \mathrm{null}\,(P-I), \mathrm{null}\,P}$.
+\end{enumerate}
+
+\bigskip
+\noindent{}\rule{\textwidth}{0.1mm}
+\bigskip
+	
+\noindent{} Q6. (特征值与特征向量, 对角化)\\
+	设$V$是一个有限维向量空间, 且dim$\,V = n$. 设$S \in \mathcal{L}(V)$是$V$上的线性算子, 且有$n$个不同的特征值. 设$T \in \mathcal{L}(V)$是另一个线性算子. 求证: 如果$ST = TS$, 那么$T$ 可对角化.
+
+\bigskip
+
+\noindent{}\emph{Solution}:
+	设$v_1,v_2,\cdots,v_n$分别是$S$的对应于特征值$\lambda_1,\lambda_2,\cdots,\lambda_n$的特征值，即$Sv_j=\lambda_j v_j,j=1,2,\cdots,n$. 由于这些$\lambda_j$互不相同，那么$\{v_1,v_2,\cdots,v_n\}$构成了$V$的一组基，由命题5.12，S在这组基下可对角化，且$V=\Null(S-\lambda_1 I)\oplus \Null(S-\lambda_2 I)\oplus\cdots\oplus \Null(S-\lambda_n I)$，这里$\Null(S-\lambda_j I) = \spa\{v_j\}$。此外，$STv_j = TSv_j = T(\lambda_j v_j) = \lambda_j Tv_j$，也就是说$Tv_j$也是$S$对应特征值$\lambda_j$的特征向量，$Tv_j\ \in \Null(S-\lambda_j I)=\spa\{v_j\}$，即存在$\mu_j$ 使得$ Tv_j = \mu_j v_j$。这就说明了$\{v_1,v_2,\cdots,v_n\}$也都是$T$的特征向量，因此$T$可以对角化。
+
+\bigskip
+\noindent{}\rule{\textwidth}{0.1mm}
+\bigskip
+
+\noindent{}Q7. (可逆映射, 对角化)设$V$是有限维的向量空间, 且$T\in \mathcal{L(V)}$. 假设$\mathrm{Range}(T) \not = \mathrm{Range}(T^2)$.
+\begin{enumerate}[(a).]
+	\item 求证: $T$不可以对角化.
+	\item 以下说法正确的是?
+	\begin{enumerate}[(i)..]
+		\item $T$一定可逆.
+		\item $T$一定不可逆.
+		\item $T$可能可逆也可能不可逆.
+	\end{enumerate}
+	证明你的结论.
+	\end{enumerate}
+	
+\noindent{}\emph{Solution}:
+\begin{enumerate}[(a).]
+	\item 利用反证法。假设$T$可以对角化，那么存在由$T$的特征向量构成的一组基$\{v_1,v_2,\cdots,v_n\}$，满足$Tv_j = \lambda_j v_j$. 显然$\range T^2\subset \range T$. 另一方面，对于任意$v\in\range T$，存在$x_1,x_2,\cdots,x_n$使得$v = T(\sum_{j=1}^nx_j v_j) = T(\sum_{\lambda_j\ne 0}x_j v_j)$. 定义$\mu_j = 1/\lambda_j$，若$\lambda_j\ne 0$，否则$\mu_j=0$，那么
+\[T^2(\sum_{j=1}^n\mu_jx_jv_j) = T(\sum_{j=1}^n\mu_jx_j Tv_j) = T(\sum_{j=1}^nx_j \mu_jTv_j) = T(\sum_{\lambda_j\ne 0} x_jv_j) = v.\]
+这说明$\range T\subset \range T^2$，从而$\range T= \range T^2$，与题设矛盾！ 所以假设不成立，$T$不能对角化。
+
+	\item $T$一定不可逆。否则，$T$可逆等价于$T$是满射，$\range T=V$. 此外，可逆映射的复合仍然可逆，故$T^2$也可逆，从而$\range T^2=V=\range T$，矛盾!
+
+\end{enumerate}
+
+\section{期中考试题讲解}
+
+\noindent{} 一、判断题
+\begin{enumerate}[1.]
+\item 如果$(v_1,v_2,v_3,v_4,v_5)$是$\R^3$中的5个互不相同的向量，那么$(v_1,\cdots,v_5)$一定是线性相关的。
+\item 如果$(v_1,v_2,v_3)$是线性空间$V$中的一个线性无关的向量组，那么$(v_1+v_2,v_2,v_3)$也一定是一个线性无关的向量组。
+\item 设$T\in\mathcal{L}(\R^4)$. 如果$T$有4个不同的实特征值，则可以找到$\R^4$的一组基，使得$T$在此基下的矩阵是对角矩阵。
+\item 从一个3维的向量空间到一个5维的向量空间的线性映射不可能是满射。
+\item 次数不高于3的复系数多项式空间$\mathcal{P}_3(\mathbb{C})$和$\mathbb{C}^3$作为复数域上的线性空间是同构的。
+\end{enumerate}
+
+\smallskip
+
+\noindent{}\emph{Solution:}
+\begin{enumerate}[1.]
+\item 对。线性无关向量组的长度不超过空间的维数。
+\item 对。设$\lambda_1(v_1+v_2)+\lambda_2 v_2+\lambda_3 v_3=0$， 那么$\lambda_1 v_1 +(\lambda_1+\lambda_2)v_2 +\lambda_3v_3=0$，由$(v_1,v_2,v_3)$线性无关可知$\lambda_1=\lambda_2=\lambda_3=0$.
+\item 对。$T$对应不同特征值的特征向量组成的向量组一定线性无关，而$T$是4维空间上的线性映射，又有4个不同特征值，因此存在特征向量构成的一组基，故可以对角化。
+\item 对。由维数公式可知，从一个3维的向量空间到一个5维的向量空间的线性映射，其$\range$的维数小于等于3，不可能是满射。
+\item 错。$\mathcal{P}_3(\mathbb{C})$的维数是4，而$\mathbb{C}^3$的维数是3.
+\end{enumerate}
+
+\sep
+
+\noindent{}二、填空题
+\begin{enumerate}[1.]
+\item 设$U$和$V$是$\R^9$的两个子空间，$\dim U=7,\dim V=5$且$\R^9=U+V$，那么$\dim U\cap V= \underline{(1)}$
+\item 设$T$是$\R^2$上的一个旋转变换，具体说来是以坐标原点为中心逆时针旋转$\frac{3\pi}{2}$，请写出$T$关于$\R^2$的标准基的矩阵$\mathcal{M}(T)=\underline{(2)}$.
+\item $\mathcal{P}_3(\R)$是次数不超过3次的多项式空间。定义$T\in\mathcal{L}(\mathcal{P}_3(\R),\mathcal{P}_3(\R))$为
+\[Tp(x)=\frac{\mathrm{d}}{\mathrm{d}x}(xp(x)),\qquad\forall p \in \mathcal{P}_3(\R).\]
+请写出$T$关于$\mathcal{P}_3(\R)$的基$(1,x,x^2,x^3)$的矩阵$\underline{(3)}$.
+\item 定义$T\in\mathcal{L}(\R^3)$为
+\[T(x,y,z)=(2x+y,5y+2z,8z),\qquad\forall (x,y,z)\in \R^3.\]
+则$T$关于$\R^3$的标准基的矩阵是$\underline{(4)}$，T的特征值是$\underline{(5)}$.
+\end{enumerate}
+
+\smallskip
+
+\noindent{}\emph{Solution:}
+\begin{enumerate}[1.]
+\item 由维数公式可知，$\dim U\cap V = \dim U+\dim V-\dim( U+V)=3.$
+\item $T(1,0)=(0,-1), T(0,1)=(1,0)$，所以
+\[\mathcal{M}(T)=
+\begin{pmatrix}
+0 & 1\\
+-1 &0\\
+\end{pmatrix}.\]
+\item 由于$T(x^k) = \frac{\mathrm{d}x^{k+1}}{\mathrm{d}x}= (k+1)x^k$，
+\[\mathcal{M}(T) =
+\begin{pmatrix}
+1&0&0&0\\
+0&2&0&0\\
+0&0&3&0\\
+0&0&0&4\\
+\end{pmatrix}.\]
+\item 由于$T(1,0,0)=(2,0,0),T(0,1,0)=(1,5,0),T(0,0,1)=(0,2,8)$，
+\[\mathcal{M}(T) =
+\begin{pmatrix}
+2&1&0\\
+0&5&2\\
+0&0&8\\
+\end{pmatrix}.\]
+由于在这组基下$T$是上三角矩阵，其对角线上的元素就是特征值，故特征值为$2,5,8$.
+\end{enumerate}
+
+\sep
+
+\noindent{}三、解答题和证明题
+\begin{enumerate}[1.]
+\item $U=\{(x,y)\in\R^2:x^2-y^2=0\}$是否$\R^2$的一个子空间？是的话请给出证明，不是的话请给出理由。
+
+\smallskip
+
+\noindent{}\emph{Solution:} $U$不是$\R^2$的子空间。考虑$(1,1)\in U, (1,-1)\in U$，但$(1,1)+(1,-1) = (1,0)\notin U$，说明$U$对加法不封闭。
+
+\noindent{}\underline{Remark}: 这题说$U$是$\R^2$的子空间的都得零分。如果举的不是具体例子，而是$(x_1,x_2),(y_1,y_2)\in U$，然后说$(x_1+y_1)^2 -(x_2+y_2)^2=2(x_1y_1-x_2y_2)\ne 0$的，可能会酌情扣分，需要指出具体在$x_1,x_2,y_1,y_2$什么情况下才不等于0，否则这个式子完全是有可能等于0的.
+
+\bigskip
+
+\item 设$m$是一个正整数，$V$是数域$\mathbb{F}$上的一个线性空间。设$T\in\mathcal{L}(V),\alpha\in V$满足$T^{m-1}\alpha\ne 0, T^m\alpha=0$. 证明：$(\alpha,T\alpha,\cdots,T^{m-1}\alpha)$是线性无关的。
+
+\smallskip
+
+\noindent{}\emph{Solution:} 设有$\lambda_0,\lambda_1,\cdots,\lambda_{m-1}$使得$\lambda_0 \alpha+\cdots+\lambda_{m-1}T^{m-1}\alpha=0$. 在该式两边用$T$作用，可得
+\[\lambda_0 T\alpha+\cdots+\lambda_{m-2}T^{m-1}\alpha=0.\]
+再用$T$作用，可得
+\[\lambda_0 T^2\alpha+\cdots+\lambda_{m-3}T^{m-1}\alpha=0.\]
+作用$k$次($k=1,2,\cdots,m-1$)即可得到
+\[\lambda_0 T^k\alpha+\cdots+\lambda_{m-k-1}T^{m-1}\alpha=0.\]
+特别地，当$k=m-1$时，由$\lambda_0T^{m-1}\alpha=0$可知$\lambda_0=0$. 将$\lambda_0=0$代入$k=m-2$时的式子$\lambda_0T^{m-2}\alpha+\lambda_1T^{m-1}\alpha=0$可知$\lambda_1=0$，以此类推可知$\lambda_0=\lambda_1=\cdots=\lambda_{m-1}=0$，即证得$(\alpha,T\alpha,\cdots,T^{m-1}\alpha)$线性无关。
+
+\bigskip
+
+\item 设$A\in\R^{n\times n}$. 请证明$A$是单位矩阵的常数倍当且仅当对所有的矩阵$B\in \R^{n\times n}$都有$BA=AB$.
+
+\smallskip
+
+\noindent\emph{Solution:} 若$A=\lambda I$，则$AB=\lambda B= BA$是显然的。反之，我们考虑$E_{ij},i,j=1,2,\cdots, n$，其第$i$行第$j$列元素为1，其余元素全都为0. 考虑$AE_{ii}$，只有第$i$列非零；考虑$E_{ii}A$，只有第$i$行非零。由$AE_{ii}=E_{ii}A$可知，$A_{ij}=0,\forall i\ne j$，即$A$必须是对角阵。再考虑$AE_{ij}$，其$i$行$j$列元素为$A_{ii}$；考虑$E_{ij}A$，其$i$行$j$列元素为$A_{jj}$. 由$AE_{ij}=E_{ij}A$可知$A_{ii}=A_{jj}$，即$A$的对角元素都相等，故$A$是单位矩阵的常数倍。
+
+\noindent{}\underline{Remark}: 这一道题分为两个方向，左推右占6分，右推左占9分。再右推左时，有些同学把$A,B$的元素设了出来，乘一下然后直接说“由对应元素相等可知”，这种做法会被扣分，因为过程不够详细，有投机取巧之嫌。
+
+\item 设$V$是一个有限维的非零向量空间，$T,S\in \mathcal{L}(V)$. 请证明如果$\lambda$是$TS$的一个非零特征值，那么$\lambda$是$ST$的一个非零特征值。
+
+\smallskip
+
+\noindent{}\emph{Solution:} 设$v\ne 0$是$TS$对应与特征值$\lambda$的特征向量，$TS v =\lambda v$，在两边同时用$S$作用即可得到$STSv = \lambda Sv$. 若$Sv\ne0$，则该式说明$Sv$是$ST$对应于$\lambda$的特征向量，$\lambda$是$ST$的特征值；若$Sv=0$，则$\lambda v = TSv =0$推出$\lambda=0$，这与条件矛盾。因此，$\lambda$是$ST$的特征值。
+
+\bigskip
+
+\item 设$V$是一个有限维的非零向量空间，且$\dim V=n$. 再设$T\in\mathcal{L}(V)$有$n$个互不相同的特征值。请证明：如果$S\in\mathcal{L}(V)$满足$ST=TS$，那么$S$可对角化。
+
+\smallskip
+
+\noindent{}\emph{Solution:} 设$v_1,v_2,\cdots,v_n$分别是$S$的对应于特征值$\lambda_1,\lambda_2,\cdots,\lambda_n$的特征值，即$Sv_j=\lambda_j v_j,j=1,2,\cdots,n$. 由于这些$\lambda_j$互不相同，那么$\{v_1,v_2,\cdots,v_n\}$构成了$V$的一组基，由命题5.12，S在这组基下可对角化，且$V=\Null(S-\lambda_1 I)\oplus \Null(S-\lambda_2 I)\oplus\cdots\oplus \Null(S-\lambda_n I)$，这里$\Null(S-\lambda_j I) = \spa\{v_j\}$。此外，$STv_j = TSv_j = T(\lambda_j v_j) = \lambda_j Tv_j$，也就是说$Tv_j$也是$S$对应特征值$\lambda_j$的特征向量，$Tv_j\ \in \Null(S-\lambda_j I)=\spa\{v_j\}$，即存在$\mu_j$ 使得$ Tv_j = \mu_j v_j$。这就说明了$\{v_1,v_2,\cdots,v_n\}$也都是$T$的特征向量，因此$T$可以对角化。
+
+\noindent{}\underline{Remark:}该题评分分为3大块，说明$Tv_j$也是$S$的特征向量占5分，说明$Tv_j=\mu_j v_j$占5分，说明$T$有一组特征向量构成的基$v_1,v_2,\cdots,v_n$占5分。其中第三步有些同学试图证明$T$有$n$个不同的特征向量，即说明$\mu_j,j=1,2,\cdots,n$不互相等，这是证不出来的，按照这个思路去做会被酌情扣2-3分。
+
+\bigskip
+
+\item 设$V$是一个有限维的向量空间，$W$是一个向量空间。再设$S,T\in\mathcal{L}(V,W)$，请证明：
+\[\dim \range(S+T)\le \dim \range S +\dim \range T.\]
+
+\smallskip
+
+\noindent{}\emph{Solution:} 
+$$\range (S+T)=\{Sv+Tv:v\in V\}\subset\{Sv_1+Tv_2:v_1,v_2\in V\}=\range S+\range T.$$
+因此，由维数公式，
+\[\dim \range(S+T) \le \dim(\range S+\range T)\le \dim \range S+\dim \range T.\]
+
+\noindent{}\underline{Remark:}该题有些同学试图证明$\range (S+T) = \range S+\range T$，这是证不出来的（取$W=V,S=\mathrm{Id}_V, T= -S$即知），只要出现了这个式子就只得2分。
+\end{enumerate}
+\end{document}
