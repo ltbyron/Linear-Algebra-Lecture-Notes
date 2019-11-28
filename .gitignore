@@ -1,6 +1,6 @@
 <<<<<<< HEAD
-*.pdf
-*.ppt
+./*.pdf
+./*.ppt
 *.pptx
 *.tex
 *.txt

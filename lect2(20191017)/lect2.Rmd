@@ -1,0 +1,364 @@
+---
+title: "线性代数第二次习题课"
+author: "李弢"
+date: "2019年10月17日"
+documentclass: ctexart
+
+output:
+  rticles::ctex:
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
+    keep_tex: true
+    includes:
+      header-includes:
+        - \usepackage[a4paper, total={6in, 8in}]{geometry}
+        - \usepackage{amsmath,amsfonts,amssyb}
+classoption: "hyperref,"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+\def\vec{\overrightarrow}
+\def\bfF{\mathbf{F}}
+\def\calP{\mathcal{P}}
+\def\calC{\mathcal{C}}
+\def\calL{\mathcal{L}}
+\def\R{\mathbb{R}}
+\def\N{\mathbb{N}}
+\def\Z{\mathbb{Z}}
+\def\span{\mathrm{span}\,}
+\def\dim{\mathrm{dim}\,}
+\def\Null{\mathrm{null}\,}
+\def\range{\mathrm{range}\,}
+
+# 线性空间与子空间
+
+## 复习与思考
+
+线性空间可以看作是“平面”和“空间”的抽象推广，我们从“平面”与“空间”向量的各种性质中，抽象出最本质的几条，作为定义的条件。从此以后，“向量”这个名词指的不再是“既有大小又有方向的量”，而是任何线性空间中的元素都是向量。这样，基于这些基本性质 推导出的结论就具有普适性，对任何线性空间都成立。这里稍微提一下，线性空间定义中的八条并不是独立的，其中一条可以由其他七条推出，有兴趣的同学可以自行查找相关资料。不过一般为了方便，我们还是使用八条基本性质作为定义。
+
+关于线性空间最为熟知的例子就是 $n$ 元组。此外，一个常见的例子是所有系数在 $\bfF$ 中的多项式的全体 $\calP(\bfF)$. 这个例子一开始让人难以接收，因为我们总是想要区别“变量”与“函数”。而实际上，函数本身也可以是一个变量，与普通的变量并无不同。或者，你可以把一个长度为$n$的$n$元组看成是一个从自然数集$\N$到实数$\R$的函数，把$\R^n$看成是从自然数集$\N$到实数$\R$的函数的全体。而$\calP(\bfF)$中的向量是一个从$\bfF$映射到$\bfF$的多项式函数，这与$\R^n$的情况是类似的，只是定义域与值域有所不同。区间$[a,b]$上的所有连续函数的全体也是一个线性空间，记作$\calC([a,b])$.
+
+有了线性空间的概念之后还可以谈论子空间。子空间本身也是一个线性空间，但由于继承了原来空间的一些性质，验证一个子空间时只要验证三条定义即可：
+
+- 包含加法单位元$0$
+- 对加法运算封闭
+- 对乘法运算封闭
+
+其中第一条看似多余，实际上是为了防止考虑的子空间不包含任何元素。作为几个直观的例子，平面中所有过原点的直线都是子空间，空间中所有过原点的直线和过原点的平面也都是子空间。所有系数在$\bfF$中的不超过$m$次的多项式的全体$\calP_m(\bfF)$是$\calP(\bfF)$的一个子空间，但所有系数在$\bfF$中的$m$次的多项式的全体却不是，想一想原因是什么？区间$[a,b]$上的连续可微、且导数也连续的函数的全体是$\calC([a,b])$的一个子空间，常记作$\calC^1([a,b])$. 
+
+对于线性空间$V$的两个子空间$U_1,U_2$，可以考虑它们的并集$U_1\cup U_2$，但这一般不是一个子空间。为了保证运算完还是一个子空间，我们考虑它们的和$U_1+U_2={u_1+u_2,\forall u_1 \in U_1,\forall u_2\in U_2}$，多个子空间的情况可以类似地去定义。显然，$U_1+U_2$中的向量都可以写成$U_1$中的向量加上$U_2$中向量的形式，但这种写法不一定唯一。如果这种写法唯一，我们称其和为“直和”。也就是说，直和是特殊的和，直和一定是和，但和不一定是直和。考察平面与空间中的几个例子，可以看出，非直和给人一种“整体小于部分之和”的感觉，甚至某些特殊情况下“加了等于没加”，这种感觉将来用维数来刻画比较清晰。验证直和时只需要验证加法单位元$0$是否能被唯一地表示出来，这一点初看起来很不可思议：我们要求所有的元素都能被唯一表示，但只要验证$0$可以被唯一表示就足够了。这正是“线性”的结果，好像每个元素的地位都是“平等”的，具有某种“不变性”。在后面学习线性映射时验证一个线性映射是单射也会遇到。
+
+在《线性代数应该怎样学》这本书中，牵涉到直和的时候似乎总是默认了它们的和就是$V$，这其实是不必要的。定义中$V$的选取本身就有一定的随意性，比如若$V$是$W$的子空间，我们同样可以把$U_1,U_2$看成是$W$的子空间。我们在定义中要求$U_2,U_2$是$V$的子空间，是为了它们的元素之间可以做加法运算，实际上很多时候我们不关心$V$是什么，只要$U_1,U_2$中的元素可以做运算就可以了。
+
+## 习题选讲
+
+\noindent{} 1.举出一个$\R^2$的非空子集$U$的例子，使得$U$对加法和取加法逆封闭，但$U$不是$\R^2$的子空间。
+
+\noindent{} 解答：考虑$U=\Z^2$，其中$\Z$代表整数，即平面上的所有整格点。
+
+\bigskip
+
+\noindent{} 2.举出一个$\R^2$的非空子集$U$的例子，使得$U$对标量乘法封闭，但$U$不是$\R^2$的子空间。
+
+\noindent{}解答：考虑$U=\{(x,y)\in \R^2|xy=0\}$，即$U$是$x$轴和$y$轴之并。
+ 
+\bigskip
+ 
+\noindent{} 3.证明$V$的任意一组子空间的交仍然是子空间。
+
+\noindent{} 解答：设$U_{\alpha},\alpha\in I$是$V$的一族子空间，欲证$\cap_{\alpha\in I}U_{\alpha}$是$V$的子空间。
+
+- 因$0\in U_{\alpha},\forall \alpha\in I$， $0\in \cap_{\alpha\in I}U_{\alpha}$;
+- 任意$u,v\in \cap_{\alpha\in I}U_{\alpha}$, 有$u,v\in U_{\alpha},\forall \alpha\in I$.  而$U_{\alpha}$均为子空间，故$u+v\in U_{\alpha},\forall \alpha\in I$，因此$u+v \in \cap_{\alpha\in I}U_{\alpha}$;
+- 任意$u\in \cap_{\alpha\in I}U_{\alpha}$, 有$u\in U_{\alpha},\forall \alpha\in I$.  而$U_{\alpha}$均为子空间，故$\lambda u\in U_{\alpha},\forall \alpha\in I,\forall \lambda \in \bfF$，因此$\lambda u \in \cap_{\alpha\in I}U_{\alpha}$;
+
+这就说明了$\cap_{\alpha\in I}U_{\alpha}$是$V$的子空间。
+
+\noindent{} __注：__ 题目中说的是“任意”子空间的交，而不是“任意可数个”子空间的交，因此不能取可数个子空间来说明，虽然过程都是一样的。
+
+\bigskip
+
+\noindent{} 4. 证明$V$的两个子空间的并是子空间当且仅当其中一个子空间包含于另一个子空间中。即，设$U_1,U_2$是$V$的子空间，则$U_1\cup U_2$是子空间$\iff$ $U_1\subset U_2$或$U_2\subset U_1$. 
+
+\noindent{}解答：$\Leftarrow$是显然的，下面我们考虑$\Rightarrow$:
+
+利用反证法，假设$U_1\not\subset U_2$或$U_2\not\subset U_1$，则存在$u_1\in U1$且$u_1\notin U_2$ 及 $u_2 \in U_2$且$u_2\notin U_1$. 显然，$u_1,u_2\in U_1\cup U_2$，而$U_1\cup U_2$ 是子空间，那么$u_1+u_2 \in U_1\cup U_2$. 
+
+- 若$u_1+u_2 \in U_1$, 则$u_2 = (u_1+u_2)-u_1$，推出$u_2\in U_1$，矛盾！
+- 若$u_1+u_2 \in U_2$, 则$u_1 = (u_1+u_2)-u_2$，推出$u_1\in U_2$，矛盾！
+
+因此，假设不成立，必然有$U_1\subset U_2$或$U_2\subset U_1$. 
+
+\bigskip
+
+\noindent{} 5.证明或举反例，若$U_1,U_2,W$是$V$的子空间，使得$U_1+ W=U_2+ W$，那么$U_1=U_2$. 
+
+\noindent{}解答：在$\R^2$中，考虑$U_1=\{(x,0),\forall x\in \R\}, U_2=\{(0,x),\forall x\in \R\}, W={(x,x),\forall x\in\R}$，显然有$U_1+W=U_2+W=\R^2$，但$U_1\ne U_2$. 
+
+\noindent{} __注：__ 把$+$换成$\oplus$，这个例子也适用。这一题说明了子空间的加法不能像标量或者向量的加法那样“消去”。
+
+# 线性组合、线性相关与线性无关
+
+## 复习与思考
+
+本书中关于维数，是先区分了“有限维”与“无限维”，再细化到“维数”的定义。如果一个线性空间的所有元素都能被有限个向量的线性组合表示出来，就说是有限维线性空间；若否，则是无限维线性空间。而此时，对于有限维线性空间的维数具体如何定义尚不清楚。在深入思考“维数”该如何定义的时候，根据奥卡姆剃刀原则引出了“最短张成组”这个想法，又由“最短”的判定方法引出了线性相关与线性无关的概念。
+
+线性相关的概念是“共线”与“共面”这种几何概念的抽象推广。设$v_1,v_2,\cdots,v_m$是$V$中的向量，如果存在不全为0的$\lambda_1,\lambda_2,\cdots,\lambda_m\in \bfF$使得$\lambda_1 v_1+\lambda_2 v_2+\cdots+\lambda_m v_m=0$，那么我们说$v_1,v_2,\cdots,v_m$线性相关；如果$\lambda_1 v_1+\lambda_2 v_2+\cdots+\lambda_m v_m=0$可推出$\lambda_1=\lambda_2=\cdots=\lambda_m=0$，我们说$v_1,v_2,\cdots,v_m$线性无关。直观上来看，线性相关可以理解为这些向量中存在“滥竽充数”的，它可以用别的向量线性表示出来，而线性无关意味着每个向量都“独当一面”，没有谁能代替谁。注意，虽然这里将线性相关线性无关放在有限维向量空间下讲述，实际上这两个概念完全可以在一般的向量空间使用，但我们只会讨论有限个向量是否线性相关/线性无关，在线性空间中我们从不考虑无穷多个向量的线性组合。提到这两个概念还有几点注意事项：
+
+- 线性相关/线性无关与向量组内向量的顺序没有关系；
+- 线性相关/线性无关是描述一个向量组内部的性质，不能说某向量与某向量组线性无关，或某两个向量组线性无关。
+- 线性相关的向量组里 __存在__ 某向量可以由其他向量线性表示出来，而不是 __任意__ 向量可以由其他向量线性表示出来。
+
+## 习题选讲
+
+\noindent{} 1.如果$(v_1,v_2,\cdots,v_m)$线性无关，那么去掉其中几个向量(不妨设为$v_{k+1},\cdots,v_m$)之后的向量组$(v_1,v_2,\cdots,v_k)$也线性无关。
+
+\noindent{} 解答1：设$\lambda_1 v_1+\lambda_2 v_2 +\cdots+\lambda_k v_k=0$，则$\lambda_1 v_1+\lambda_2 v_2 +\cdots+\lambda_k v_k + 0 v_{k+1}+\cdots+0v_m=0$.  由于$(v_1,v_2,\cdots,v_m)$线性无关，即可知$\lambda_1=\lambda_2=\cdots=\lambda_k=0$，即$(v_1,v_2,\cdots,v_k)$线性无关。
+
+\noindent{} 解答2：利用反证法，假设$(v_1,v_2,\cdots,v_k)$线性相关，那么添加几个向量后得到的向量组仍然线性相关。添加$(v_{k+1},v_{k+2},\cdots,v_m)$，我们得到$(v_1,v_2,\cdots,v_m)$线性相关，而这与题设矛盾。因此$(v_1,v_2,\cdots,v_k)$线性无关。
+
+\bigskip
+
+\noindent{} 2.如果$(v_1,v_2,\cdots,v_m)$张成$V$，那么由每个向量减去其后一个向量得到的向量组$(v_1-v_2,v_2-v_3,\cdots,v_{m-1}-v_m,v_m)$也张成$V$. 
+
+\noindent{} 解答：对于任何$v\in V$，存在$\lambda_1,\cdots,\lambda_m$使得
+\[v = \lambda_1v_1+\lambda_2 v_2+\cdots+\lambda_mv_m.\]
+经过计算可知，
+\[\lambda_1v_1+\lambda_2 v_2+\cdots+\lambda_mv_m=\lambda_1(v_1-v_2)+(\lambda_1+\lambda_2)(v_2-v_3)+\cdots (\lambda_1+\cdots+\lambda_m)v_m\]
+因此$v$也可以由$(v_1-v_2,v_2-v_3,\cdots,v_{m-1}-v_m,v_m)$线性表示出来，故$(v_1-v_2,v_2-v_3,\cdots,v_{m-1}-v_m,v_m)$也张成$V$. 
+
+\bigskip
+
+\noindent{} 3.如果$(v_1,v_2,\cdots,v_m)$线性无关，那么由每个向量减去其后一个向量得到的向量组$(v_1-v_2,v_2-v_3,\cdots,v_{m-1}-v_m,v_m)$也线性无关。
+
+\noindent{} 解答：如果$\lambda_1 (v_1-v_2)+\lambda_2 (v_2-v_3)+\cdots+\lambda_m v_m=0$，则
+\[\lambda_1 v_1+(\lambda_2-\lambda_1)v_2 +\cdots+(\lambda_m-\lambda_{m-1})v_m=0.\]
+由于$(v_1,v_2,\cdots,v_m)$线性无关，知$\lambda_1=0,\lambda_2-\lambda_1=0,\cdots,\lambda_m-\lambda_{m-1}=0$，进而推知$\lambda_1=\lambda_2=\cdots=\lambda_m=0$，故$(v_1-v_2,v_2-v_3,\cdots,v_{m-1}-v_m,v_m)$线性无关。
+
+\bigskip  
+
+\noindent{} 4. 设$(v_1,v_2,\cdots,v_m)$在$V$中是线性无关的，$w\in V$，证明若$(v_1+w,v_2+w,\cdots,v_m+w)$是线性相关的，则$w\in\span(v_1,v_2,\cdots,v_m)$. 
+
+\noindent{} 解答：因$(v_1+w,v_2+w,\cdots,v_m+w)$是线性相关的，存在不全为零的数$\lambda_1,\cdot,\lambda_m$使得 $\lambda_1(v_1+w)+\lambda_2(v_2+w)+\cdots +\lambda_m(v_m+w)=0$，即
+\[\lambda_1v_1+\lambda_2v_2+\cdots+\lambda_m v_m+(\lambda_1+\lambda_2+\cdots+\lambda_m)w=0.\]
+若$(\lambda_1+\lambda_2+\cdots+\lambda_m)=0$，则有不全为零的数$\lambda_1,\cdot,\lambda_m$使得$\lambda_1v_1+\lambda_2v_2+\cdots+\lambda_m v_m=0$，这与$(v_1,v_2,\cdots,v_m)$线性无关矛盾。因此$(\lambda_1+\lambda_2+\cdots+\lambda_m)\ne 0$，容易看出
+\[w = -\frac{\lambda_1}{\lambda_1+\lambda_2+\cdots+\lambda_m}v_1-\frac{\lambda_2}{\lambda_1+\lambda_2+\cdots+\lambda_m}v_2-\cdots-\frac{\lambda_m}{\lambda_1+\lambda_2+\cdots+\lambda_m}v_m\]
+即$w\in\span(v_1,v_2,\cdots,v_m)$.
+
+\noindent{} __注：__ 反之，由$w\in\span(v_1,v_2,\cdots,v_m)$，能否推出$(v_1+w,v_2+w,\cdots,v_m+w)$线性相关？若不能，需要加上什么条件？
+
+\bigskip 
+
+\noindent{} 5. 证明：对于齐次线性方程组
+\begin{equation}
+\left\{
+\begin{aligned}
+&a_{11}x_1&+a_{12}x_2+&\cdots &a_{1m}x_m = &0\\
+&a_{21}x_1&+a_{22}x_2+&\cdots& a_{2m}x_m = &0\\
+&\vdots&\vdots&&\vdots=&\vdots\\
+&a_{n1}x_1&+a_{n2}x_2+&\cdots& a_{nm}x_m = &0\\
+\end{aligned}\right.\notag
+\end{equation}
+如果$m>n$，那么必然存在非零解。
+
+\noindent{} 解答：我们记 $v_i = (a_{1i},a_{2i},\cdots,a_{ni})\in \R^n$，则上述方程组可以写为$x_1v_1+x_2v_2+\cdots+x_mv_m=0$. 由于在$\R^n$中可以找到长度为$n$的张成组，因此$\R^n$中所有线性无关组的长度都必须小于等于$n$. 换言之，所有长度大于$n$的向量组都是线性相关的。由于$m>n$，知$(v_1,v_2,\cdots,v_m)$线性相关，因此存在不全为$0$的$x_1,x_2,\cdots,x_m$使得$x_1v_1+x_2v_2+\cdots+x_mv_m=0$. 
+
+# 基和维数
+
+## 复习与思考
+
+在之前初步讨论维数定义的时候，已经提到“最短张成组”的概念。在这里，我们把线性无关的张成组称为“基”。等价地，一组向量称为基当且仅当任何向量都可以唯一地由它们线性表示出来。“基”是向量空间非常基本的概念，很多时候只要抓住了“基”，就能弄清楚向量空间的性质。一个线性空间有无穷多个元素，看似难以把握，但由于“线性”的性质，我们只要抓住“基”中的有限个向量就可以了，这帮助我们从无限化归为有限。对于基而言，线性无关与张成组这两个条件缺一不可：一个线性无关组可能没有办法线性表示出所有向量，一个张成组里可能多余的向量导致表示不唯一。但在有限维向量空间中，一个线性无关组总可以 __扩充__ 为一组基，一个张成组也总可以 __化简__ 为一组基。其中将线性无关组扩充为基的技巧将在证明中多次用到（如证明$\dim(U_1+U_2)=\dim U_1+\dim U_2-\dim(U_1\cap U_2)$时），特点是从最小的子空间出发，逐步扩充。
+
+一个线性空间有无穷多组基，但是它们的长度都是一样的，这个长度就称为线性空间的维数。这样定义的维数与我们的直观也相符，比如$\dim \bfF^n=n$. 若已知维数$\dim V$，则判断一个向量组是否为基有更多的方法。实际上，下面三条中的任何两条成立，都可以保证一个向量组$(v_1,v_2,\cdots,v_m)$是基：
+
+- $m=\dim V$;
+- $(v_1,v_2,\cdots,v_m)$线性无关;
+- $V=\span(v_1,v_2,\cdots,v_m)$;
+
+此外，不难看出上面三条中的任何两条成立，都能推出另一条也成立。
+
+对于维数公式$\dim(U_1+U_2)=\dim U_1+\dim U_2-\dim(U_1\cap U_2)$，可以将其与容斥原理($|S_1\cup S_2|=|S_1|+|S_2|-|S_1\cap S_2|$)做对比。我们之前说非直和给人一种“整体小于部分之和”的感觉，问题就出在$U_1\cap U_2$ 这一块。如果$U_1\cap U_2={0}$，即$U_1+U_2=U_1\oplus U_2$是直和，此时$\dim (U_1\oplus U_2)=\dim U_1+\dim U_2$，就是“整体等于部分之和”了。
+
+
+## 习题选讲
+  
+\noindent{} 1. 设$V$是有限维的，$\dim V=n$，证明在$V$中存在一维子空间$U_1,\cdots,U_n$使得$V=U_1\oplus U_2\oplus\cdots\oplus U_n$.
+
+\noindent{} 解答：取$V$的一组基$(u_1,u_2,\cdots,u_n)$，记$U_i = \span(u_i),i=1,2,\cdots,n$，下证$V=U_1\oplus U_2\oplus\cdots\oplus U_n$.
+
+- 由于$(u_1,u_2,\cdots,u_n)$是$V$的基，故$U_1+U_2+\cdots+U_n=V$;
+- 若$0=\lambda_1 u_1+\lambda_2 u_2+\cdots +\lambda_n u_n$，由于$(u_1,u_2,\cdots,u_n)$线性无关，可推出$\lambda_1=\lambda_2=\cdots=\lambda_n=0$，即$0$的表示唯一。
+
+因此$V=U_1\oplus U_2\oplus\cdots\oplus U_n$.
+
+\bigskip
+
+\noindent{}2. 设$V$是有限维的，$U$是$V$的子空间使得$\dim U=\dim V$，证明$U=V$.
+
+\noindent{} 解答：为证$U=V$，只需要证明$U\subset V$且$V\subset U$，其中$U\subset V$是显然的，故只需证$V\subset U$. 取$U$的一组基$(u_1,u_2,\cdots,u_{\dim U})$，它们在$U$中线性无关，在$V$中也线性无关。又由于$\dim U=\dim V$，可知$(u_1,u_2,\cdots,u_{\dim U})$也是$V$的一组基，故可以张成$V$. 这就说明了任意$V$中的向量都可以由$(u_1,u_2,\cdots,u_{\dim U})$线性表示出来，因而属于$U$，证得$V\subset U$.
+
+\bigskip
+
+\noindent{} 3.设$p_0,p_1,\cdots,p_m$是$\calP_m(\bfF)$中的多项式，使得对任意$j$都有$p_j(2)=0$. 证明$(p_0,p_1,\cdots,p_m)$在$\calP_m(\bfF)$中不是线性无关的。
+
+\noindent{} 解答：利用反证法。假设$(p_0,p_1,\cdots,p_m)$在$\calP_m(\bfF)$在线性无关，由于$\dim\calP_m(\bfF)=m+1$，可知$(p_0,p_1,\cdots,p_m)$是$\calP_m(\bfF)$的一组基，因而可以张成$\calP_m(\bfF)$. 而任意$p\in \span(p_0,p_1,\cdots,p_m)$都有$p(2)=0$，即说明$\calP_m(\bfF)$中的元素在$2$这一点取值都为$0$，这显然不合实际。因此假设错误，$(p_0,p_1,\cdots,p_m)$线性相关。
+
+\bigskip
+
+\noindent{} 4.证明若$V$是有限维向量空间，$U_1,U_2,\cdots,U_m$是它的子空间，则$\dim(U_1+U_2+\cdots+U_m)\le \dim U_1+\dim U_2+\cdots+\dim U_m$.
+
+\noindent{} 解答1：利用数学归纳法，
+
+- 当$m=2$时，$\dim(U_1+U_2)=\dim U_1+\dim U_2-\dim(U_1\cap U_2)\le\dim U_1+\dim U_2$;
+- 假设$m=k$时成立，$m=k+1$时
+
+\begin{equation}
+\begin{aligned}
+\dim(U_1+U_2+\cdots+U_{k}+U_{k+1})&= \dim(U_1+U_2+\cdots+U_{k})+\dim U_{k+1}\\
+&\qquad -\dim((U_1+U_2+\cdots+U_{k})\cap U_{k+1})\\
+&\le \dim(U_1+U_2+\cdots+U_{k})+\dim U_{k+1}\\
+& \le \dim U_1+\dim U_2+\cdots+\dim U_{k+1}.
+\end{aligned}\notag
+\end{equation}
+
+\noindent{} 解答2：取$U_i$的基$(u_{i1},u_{i2},\cdots,u_{in_i}),i=1,2,\cdots,m$，其中$n_i=\dim U_i$.那么将这些向量组并在一起得到的向量组$\cup_{i=1}^m\{u_{i1},\cdots,u_{in_i}\}$是$U_1+U_2+\cdots+U_m$的一个张成组，其长度为$\dim U_1+\dim U_2+\cdots +\dim U_m$. 由于张成组的长度大于等于维数，即知
+\[\dim(U_1+U_2+\cdots+U_m)\le \dim U_1+\dim U_2+\cdots+\dim U_m.\]
+  
+\bigskip
+
+\noindent{} 5.设$V$是有限维向量空间，$U_1,U_2,\cdots,U_m$是它的子空间，使得$V=U_1\oplus U_2\oplus\cdots\oplus U_m$，那么$\dim V=\dim U_1+\dim U_2+\cdots+\dim U_m$.
+
+\noindent{} 解答：取$U_i$的基$(u_{i1},u_{i2},\cdots,u_{in_i}),i=1,2,\cdots,m$，其中$n_i=\dim U_i$. 那么将这些向量组并在一起得到的向量组$\cup_{i=1}^m\{u_{i1},\cdots,u_{in_i}\}$是$U_1+U_2+\cdots+U_m=V$的一个张成组，其长度为$\dim U_1+\dim U_2+\cdots +\dim U_m$. 我们现在说明，$\cup_{i=1}^m\{u_{i1},\cdots,u_{in_i}\}$是线性无关的。假设有$\sum_{i=1}^m\sum_{j=1}^{n_i}\lambda_{ij}u_{ij}=0$，注意到每个$\sum_{j=1}^{n_i}\lambda_{ij}u_{ij}\in U_i$，而$U_1+U_2+\cdots+U_m$是直和，可知$\sum_{j=1}^{n_i}\lambda_{ij}u_{ij}=0,\forall i=1,2,\cdots,m$. 又由于$(u_{ij},j=1,2,\cdots,n_i)$是$U_i$的一组基，故它们线性无关，得知$\lambda_{ij}=0,\forall i,j$. 这就说明了$\cup_{i=1}^m\{u_{i1},\cdots,u_{in_i}\}$线性无关，而这个向量组又是张成组，故是$V$的一组基，其长度等于$V$的维数，即
+\[\dim V=\dim U_1+\dim U_2+\cdots+\dim U_m.\]
+
+\noindent{} __注：__ 反之是否成立？比如已知$\dim U_1+\dim U_2+\cdots+\dim U_m=\dim(U_1+U_2+\cdots +U_m)$，能否说明$U_1+U_2+\cdots+ U_m=U_1\oplus U_2\oplus\cdots \oplus U_m$?
+
+\bigskip
+
+\noindent{} 6.(Lagrange插值多项式)设有$(x_i,y_i),i=1,2,\cdots,m$, 其中$x_1\ne x_2\ne\cdots\ne x_m$.
+
+- (a) 令$p_i(x) = \frac{\prod_{j\ne i}(x-x_j)}{\prod_{j\ne i}(x_i-x_j)}$，证明$(p_1,p_2,\cdots,p_m)$是$\calP_{m-1}(\R)$的基。
+- (b) 利用(a)中的结果，构造一个次数不超过$m-1$次的多项式$p\in \calP_{m-1}(\R)$使得$p(x_i)=y_i$.
+
+\noindent{} 解答：
+
+- (a) 注意到该向量组长度恰好等于$\dim\calP_{m-1}(\R)$，因此只需说明它们线性无关。注意到对任意$i=1,2,\cdots,m$,
+\[p_i(x_k)=
+\begin{cases}
+\frac{\prod_{j\ne i}(x_i-x_j)}{\prod_{j\ne i}(x_i-x_j)}=1\quad,\quad\text{~if~} k=i\\
+\frac{\prod_{j\ne i}(x_k-x_j)}{\prod_{j\ne i}(x_i-x_j)}=0\quad,\quad\text{~if~} k\ne i\\
+\end{cases}
+\]
+若$\lambda_1 p_1(x)+\lambda_2 p_2(x)+\cdots+\lambda_m p_m(x) =0$，将$x=x_i$带入即得$\lambda_i=0,\forall i=1,2,\cdots,m$，因此$(p_1,p_2,\cdots,p_m)$线性无关，是$\calP_{m-1}(\R)$的一组基。
+
+- (b) 令$p(x) = \sum_{i=1}^m y_ip_i(x)$即可。
+
+# 线性映射及其性质
+
+## 复习与思考
+
+线性映射讨论的是两个线性空间之间的映射。可能初学时“线性映射”这个名字让人望而生畏，但其实它不过是特殊的映射。一般在任何两个 __集合__ 之间都可以谈论映射，我们这里要求这两个集合必须是 __线性空间__。此外，不是所有的映射都在我们考虑的范围内，我们只考虑那些具有线性（加性与齐性）性质的映射。加性$T(u+v)=T(u)+T(v)$可以看成是加法运算与映射可以交换顺序，齐性$T(\alpha u)=\alpha T(u)$可以看成是数乘运算与映射可以交换顺序。这种“交换顺序”性质我们不是第一次见到了，比如说函数的连续性，就有$\lim_{x\rightarrow x_0} f(x)=f(x_0)=f(\lim_{x\rightarrow x_0}x)$，这实际上是极限运算与函数可以交换顺序。可交换顺序给我们带来了许多方便，比如有些时候我们购物，既有满$x$减$y$的活动又有打$z$折的活动，你往往就要算计一下是先满减再折扣更划算，还是先折扣再满减更划算，这比较麻烦。线性性质告诉我们了，在定义域中运算完了做映射与先分别做映射再在值域中做运算，结果必然是一样的，省得我们算两次了。
+
+单射、满射、一一映射的概念并不是线性映射特有的，而是对任何一个一般的映射都可以考虑的。但由于线性映射的特殊性，我们有更多的方式去描述这些性质。一个线性映射$T$是满射当且仅当$\range T$等于像空间，这与一般的映射并无特殊之处，只不过这里$\range T$必然是一个线性空间。原先单射要求每个值域中元素的原像是唯一的，在线性映射的场景下只要$0$的原像只有$0$就可以了。我们还把$0$的原像赋予一个特殊的名字，叫做零空间，记作$\Null T$，它表示那些线性映射$T$无法区分的元素。从名字就可以看出，$\Null T$是一个子空间。可以证明，对于任意的$y_0=T(x_0)\in \range T$，其原像集$T^{-1}(y_0)=x_0+\Null T$，这不再是一个线性空间，但可以看成是零空间朝着$x_0$这个方向平移了。 
+
+涉及到线性映射的题目，很多时候把原空间和像空间的基取出来就变得容易了。实际上任何一个线性映射，只要搞清楚它在基上的表现，就能完全掌握这个线性映射了。这里涉及到两个线性空间，我们要看一个线性映射把原空间中基的元素映射到像空间之后用像空间的基如何线性表示出来。在维数公式的证明中我们就用到了这个技巧。这一点在后面学习矩阵的时候会更清楚地体会到。
+
+在维数公式$\dim V = \dim\Null T+\dim \range T$中，$V$和$\Null T$都在原空间中，而$\range T$在像空间中，这一点看起来有点奇怪，因为好像在不同的空间中计数。实际上，虽然$\range T$是在像空间里，但在定理证明过程中，我们是对它在原空间中对应的部分($\Null T$在$V$中的补空间)计数的。
+
+## 习题选讲
+
+\noindent{} 1. 证明每个从一维向量空间到自身的线性映射都是乘以某个标量。准确地说，如果$\dim V=1$，$T\in \calL(V,V)$，那么存在$a\in\bfF$使得对所有$v\in V$都有$Tv=av$.
+
+\noindent{} 解答：取$V$的一组基$(u)$，则$Tu\in V$可以由$u$线性表示出来，即存在$a\in F$ 使得$Tu = au$. 对于任意$v\in F$，存在$\lambda\in F$使得$v= \lambda u$，因此$Tv=T(\lambda u)=\lambda Tu=\lambda au=a(\lambda u)=a v$.
+
+\bigskip
+
+\noindent{} 2.设$V$是有限维的，证明$V$的子空间上的线性映射可以扩张成$V$上的线性映射。也就是说，如果$U$是$V$的子空间，$S\in\calL(U,W)$，那么存在$T\in\calL(V,W)$使得对所有$u\in U$都有$Su=Tu$.
+
+\noindent{} 解答：若$U=V$，显然成立。若否，设$V=U\oplus U'$，则对于任意$v\in V$，可以唯一地表示成$v = u+u',u\in U,u'\in U'$. 我们定义$T:V\rightarrow W$为$T(v)=S(u)$，显然有所有$u\in U$都有$Su=Tu$. 下说明这样定义的$T$确实是线性映射：
+
+- （加性）如果$v_1=u_1+u_1'\in V,v_2=u_2+u_2'\in V$，则$v_1+v_2=(u_1+u_2)+(u_1'+u_2')$. 那么$T(v_1+v_2)= S(u_1+u_2)$. 而另一方面，$T(v_1)+T(v_2)=Su_1+Su_2$，由于$S\in \calL(U,W)$，可知$T(v_1+v_2)=T(v_1)+T(v_2)$;
+- （齐性）如果$v = u+u'\in V$，则$\lambda v=\lambda u+\lambda u'$，$T(\lambda v)= S(\lambda v)=\lambda S(v)=\lambda T(v)$.
+
+\bigskip
+
+\noindent{} 3.设$T\in\calL(V,W)$是单的，并且$(v_1,v_2,\cdots,v_n)$在$V$中线性无关，证明$(Tv_1,Tv_2,\cdots,Tv_n)$在$W$中也线性无关。
+
+\noindent{} 解答：设$\lambda_1 Tv_1+\lambda_2 Tv_2 +\cdots+\lambda_nTv_n=0$，则$\lambda_1 v_1+\lambda_2 v_2+\cdots+\lambda_n v_n \in \Null T$，又由于$T$是单射，$\Null T={0}$，故$\lambda_1 v_1+\lambda_2v_2+\cdots+\lambda_n v_n=0$. 由于$(v_1,v_2,\cdots,v_n)$在$V$中线性无关，$\lambda_1=\lambda_2=\cdots=\lambda_n =0$，这就说明了$(Tv_1,Tv_2,\cdots,Tv_n)$在$W$中线性无关。
+
+\noindent{} __注：__ 反之，若$(Tv_1,Tv_2,\cdots,Tv_n)$在$W$中线性无关，$(v_1,v_2,\cdots,v_n)$在$V$中必然线性无关，无需其他条件。
+
+\bigskip
+
+\noindent{} 4. 如果$S_1,S_2,\cdots,S_n$都是单的线性映射，并且$S_1S_2\cdots S_n$有意义，那么$S_1S_2\cdots S_n$是单的。
+
+\noindent{} 解答：只需证$\Null (S_1S_2\cdots S_n)={0}$. 若$S_1S_2\cdots S_n(x) =0$，则$S_2\cdots S_n(x)\in \Null S_1={0}$，故$S_2\cdots S_n(x)=0$. 重复上述步骤可以推知$x=0$，即说明了$\Null (S_1S_2\cdots S_n)={0}$.
+
+\noindent{} __注：__
+
+- 也可以用数学归纳法证明，本质上与上述过程类似
+- 一般地，有如果$S:U\rightarrow V, T:V\rightarrow W,TS:U\rightarrow W$，则
+\[\Null S\subset \Null TS\quad,\quad \range TS\subset \range T.\]
+如果有$TS=0$，则$\range S\subset \Null T$. 虽然这些结论与本题目无关。
+
+\bigskip
+
+\noindent{} 5. 设$T$是从$V$到$\bfF$的线性映射，证明若$u\in V$不含于$\Null T$, 则$V= \Null T\oplus \span(u)$.
+
+\noindent{} 解答：显然$\Null T\cap \span(u)={0}$，故它们的和是直和，下面只需证明$V= \Null T+ \span(u)$. 显然$\dim \range T=1$，由维数公式可知$\dim \Null T = \dim V-1$，取$\Null T$的基$(u_1,u_2,\cdots,u_{\dim V-1})$，考虑向量组$(u_1,u_2,\cdots,u_{\dim V-1},u)$，其长度为$0$，且是线性无关的，因而是$V$的张成组。这就说明了$V= \Null T+ \span(u)$.
+
+\bigskip
+
+\noindent{} 6.如果$(v_1,v_2,\cdots,v_n)$张成$V$，并且$T\in \calL(V,W)$是满的，那么$(Tv_1,Tv_2,\cdots,Tv_n)$张成$W$.
+
+\noindent{} 解答：对于任意$w\in W$，由于$T\in \calL(V,W)$是满的，存在$v\in V$使得$Tv=w$. 而$(v_1,v_2,\cdots,v_n)$张成$V$，所以存在$\lambda_1,\cdots,\lambda_n$使得$v = \lambda_1v_1+\cdots \lambda_nv_n$. 两边用$T$作用即得$w = Tv = \lambda_1 Tv_1+\cdots+\lambda_n Tv_n$. 这就说明了$(Tv_1,Tv_2,\cdots,Tv_n)$张成$W$.
+
+\bigskip
+
+\noindent{} 7. 设$V$和$W$都是有限维的，证明存在从$V$到$W$的满的线性映射当且仅当$\dim W\le \dim V$.
+
+\noindent{}  解答：如果存在从$V$到$W$的满的线性映射$T$，则由维数公式知$\dim V =\dim\Null T+\dim \range T\ge \dim \range T=\dim W$. 反之，假设$\dim W\le \dim V$，不妨取$V$和$W$的基$(v_1,v_2,\cdots,v_{\dim V})$和$(w_1,w_2,\cdots,w_{\dim W})$，定义映射$T: V\rightarrow W$，
+\[T(v_i)=
+\begin{cases}
+w_i, i=1,2,\cdots,\dim W\\
+0, i=\dim W+1,\cdots,\dim V
+\end{cases}
+\]
+容易验证$T$确实是一个线性映射，并且$\range T=W$.
+
+\bigskip
+
+\noindent{} 8. 设$V$和$W$都是有限维的，并且$U$是$V$的子空间。证明存在$T\in \calL(V,W)$使得$\Null T=U$当且仅当$\dim U\ge\dim V-\dim W$.
+
+\noindent{} 解答：若存在$T\in \calL(V,W)$使得$\Null T=U$，则由维数公式知$\dim U=\dim \Null T=\dim V-\dim \range T\ge \dim V-\dim W$. 反之，假设$\dim U\ge\dim V-\dim W$，存在另一个子空间$U'$使得$V=U\oplus U'$，取$U$的基$(u_1,u_2,\cdots,u_{\dim U})$和$U'$的基$(u'_{1},\cdots,u'_{\dim V-\dim U})$，则它们一起构成了$V$的基。再取$W$的基$(w_1,w_2,\cdots,w_{\dim W})$，由于$\dim V-\dim U\le\dim W$，可以定义映射$T:V\rightarrow W$,
+
+\begin{equation}
+\begin{aligned}
+&T(u_i)=0,i=1,2,\cdots,\dim U\\
+&T(u'_i)=w_i,i=1,2,\cdots,\dim V-\dim U\\
+\end{aligned}\notag
+\end{equation}
+
+容易验证$T$确实是一个线性映射，并且$\Null T=U$.
+
+\bigskip
+
+\noindent{} 9. 试从维数公式
+\[\dim V=\dim \Null T+\dim \range T\]
+推导出子空间之和维数公式
+\[\dim(U_1+U_2)=\dim U_1+\dim U_2-\dim(U_1\cap U_2).\]
+
+\noindent{} 解答：对于$V$的两个子空间$U_1,U2$，考虑他们的笛卡尔积$U_1\times U_2$，这仍然是一个线性空间。定义$T:U_1\times U_2\rightarrow U_1+U_2$，使$T((u_1,u_2))=u_1+u_2$. 容易验证$T$是一个线性映射。此外，
+
+- 若$T((u_1,u_2))=u_1+u_2=0$，则$u_1=-u_2$，可知$\Null T = \{(u,-u),u\in U_1\cap U_2\}$，这一空间的维数为$\dim (U_1\cap U_2)$;
+- 对于任意$v\in U_1+U_2$，存在$u_1\in U_1,u_2\in U_2$使得$v=u_1+u_2$，则$T((u_1,u_2))=v$，这说明$T$是满射，$\dim\range T=\dim (U_1+U_2)$.
+- $U_1\times U_2$的维数为$\dim U_1+\dim U_2$.
+
+综上，由维数公式
+\[\dim (U_1\times U_2) = \dim \Null T+\dim \range T\]
+可知
+\[\dim U_1+\dim U_2=\dim(U_1\cap U_2)+\dim(U_1+U_2).\]
