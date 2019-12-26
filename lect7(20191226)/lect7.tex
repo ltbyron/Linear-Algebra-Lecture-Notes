@@ -1,0 +1,357 @@
+\documentclass[hyperref,]{ctexart}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\usepackage[usenames,dvipsnames]{color}
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={李弢},
+            pdftitle={线性代数第七次习题课},
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=blue,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+
+\title{线性代数第七次习题课}
+\author{李弢}
+\date{2019年12月26日}
+
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\def\vec{\overrightarrow} \def\bfF{\mathbf{F}} \def\calP{\mathcal{P}}
+\def\calC{\mathcal{C}} \def\calL{\mathcal{L}} \def\calM{\mathcal{M}}
+\def\R{\mathbb{R}} \def\C{\mathbb{C}} \def\N{\mathbb{N}}
+\def\Z{\mathbb{Z}} \def\span{\mathrm{span}\,} \def\dim{\mathrm{dim}\,}
+\def\Null{\mathrm{null}\,} \def\range{\mathrm{range}\,}
+\def\trace{\mathrm{trace}\,} \def\rank{\mathrm{rank}\,}
+\def\proj{\mathrm{Proj}\,} \def\st{\mathrm{s.t.}} \def\d{\mathrm{d}\,}
+
+\section{正算子和等距同构与极分解、奇异值分解}\label{ux6b63ux7b97ux5b50ux548cux7b49ux8dddux540cux6784ux4e0eux6781ux5206ux89e3ux5947ux5f02ux503cux5206ux89e3}
+
+\noindent{} 1.
+证明或举反例：若\(S\in\calL(V)\)，并且\(V\)有规范正交基\((e_1,e_2,\cdots,e_n)\)使得对每个\(e_j\)都有\(\|Se_j\|=1\),
+则\(S\)是等距同构。
+
+\smallskip
+
+\noindent{}
+解：考虑\(\bfF^2\)的一组规范正交基\((1,0),(0,1)\)以及\(S\in\calL(\bfF^2), S(x,y)=(x+y,0)\).
+显然\(S(1,0)=S(0,1)=(1,0)\)，\(\|S_{e_i}\|=1,i=1,2\).
+但\(\|S(1,-1)\|=0\ne\|(1,-1)\|\), 因此\(S\)不是一个等距同构
+
+\smallskip
+
+\noindent{} Remark: 问题出在什么地方？假设\(v= \sum_{i=1}^nx_ie_i\),
+那么\(Sv = \sum_{i=1}^n x_i Se_i\).
+如果\(\{Se_i\}\)仍然正交，那么可以得出\(\|Sv\| = \sqrt{\sum_{i=1}^nx_i^2}=\|v\|\),
+但一般情况下无法保证\(\{Se_i\}\)正交。
+
+\bigskip
+
+\noindent{} 2.
+证明：若\(S\in\calL(\R^3)\)是等距同构，则有非零向量\(x\in\R^3\)使得\(S^2x=x\).
+
+\smallskip
+
+\noindent{}
+解：由于\(S\)是一个等距同构，由定理7.38可知，存在一组\(\R^3\)的规范正交基，在这组基下\(S\)的矩阵是分块对角阵。又由于所考虑的空间维数为3，必定可以找到一个对角块是\(1\times 1\)的，元素为\(1\)或\(-1\).
+设这个位置对应的基中的向量为\(x\), 那么显然有\(S^2 x=x\).
+
+\bigskip 
+
+\noindent{} 3.
+设\(T\in\calL(V),S\in\calL(V)\)是等距同构，并且\(R\in\calL(V)\)是正算子使得\(T=SR\).
+证明\(S=\sqrt{T^*T}\). \smallskip
+
+\noindent{} 解：\(T^*T=R^*S^*SR=R^*R=R^2\), 由此易知\(R=\sqrt{T^*T}\).
+
+\smallskip
+
+\noindent{} Remark:
+中文版中这一题的翻译有误，\(T\in\calL(V)\)并不一定需要是等距同构。这题的意思是说如果一个算子可以写成一个等距同构和一个正算子的乘积，那么其中那个正算子一定是它的平方根。
+
+\bigskip
+
+\noindent{} 4. 设\(T\in\calL(V)\).
+证明\(T\)可逆当且仅当有唯一一个等距同构\(S\in\calL(V)\)使得\(T=S\sqrt{T^*T}\).
+
+\smallskip
+
+\noindent{} 解：
+
+\begin{itemize}
+\tightlist
+\item
+  \(\Leftarrow:\)
+  若\(T\)是可逆的，那么\(T^*T\)也是可逆的，\(\sqrt{T^*T}\)也是可逆的。在极分解中必定有\(S=T(\sqrt{T^*T})^{-1}\).
+  因此这样的等距同构\(S\)是唯一的。
+\item
+  \(\Rightarrow:\)
+  反之，假设\(T\)不可逆，那么\(\sqrt{T^*T}\)也不可逆，由于它是正算子，由谱定理可知我们能找到\(V\)的一组标准正交基，在这组基下
+  \[\calM(\sqrt{T^*T})=
+  \begin{pmatrix}
+  \lambda_1 &0& \cdots&0&0\\
+  0&\lambda_2 &\cdots&0&0\\
+  \vdots &\vdots &\ddots &\vdots&\vdots\\
+  0&0&\cdots&\lambda_r &0\\
+  0&0&0&0&\mathbf{0}
+  \end{pmatrix}.\]
+  设这时有\(T=S\sqrt{T^*T}\)，并设\(\calM(S)=[s_1,s_2,\cdots,s_n]\),
+  那么显然\([s_1,s_2,\cdots,-s_n]\)所对应的算子\(\hat{S}\)也是等距同构且满足\(\hat{S}\sqrt{T^*T}=S\sqrt{T^*T}=T\),
+  这与唯一性矛盾。
+\end{itemize}
+
+\bigskip
+
+\noindent{} 5.
+证明：若\(T\in\calL(V)\)是自伴的，则\(T\)的奇异值等于\(T\)的本征值的绝对值。
+
+\smallskip
+
+\noindent{}
+\(T\)的奇异值即\(T^*T\)的本征值的平方根，而\(T\)是自伴的，也就是\(T^2\)的本征值的平方根。而\(T^2\)的本征值即\(T\)的本征值的平方，故结论证得。
+
+\bigskip
+
+\noindent{} 6. 设\(T\in\calL(V)\).
+证明\(T\)可逆当且仅当\(0\)不是\(T\)的奇异值。
+
+\smallskip
+
+\noindent{}
+解：\(T\)可逆当且仅当\(T^*T\)可逆，\(T^*T\)可逆当且仅当\(T^*T\)没有\(0\)特征值，也就是\(0\)不是\(T\)的奇异值。
+
+\bigskip
+
+\noindent{} 7. 设\(T_1,T_2\in\calL(V)\).
+证明\(T_1\)和\(T_2\)有同样的奇异值当且仅当有等距同构\(S_1,S_2\in\calL(V)\)使得\(T_1=S_1T_2S_2\).
+
+\smallskip
+
+\noindent{} 解：
+
+\begin{itemize}
+\item
+  \(\Leftarrow:\) 如果\(T_1=S_1T_2S_2\),
+  其中\(S_1,S_2\)都是等距同构，那么\(T_1^*T_1 = S_2^*T_2^*S_1^*S_1T_2S_2 = S_2^*T_2^*T_2S_2\).
+  由于\(S_2\)是等距同构，\(S_2^*=S_2^{-1}\),
+  \(T_1^*T_1=S_2^{-1}T_2^*T_2S_2\),
+  所以\(T_1^*T_1\)和\(T_2^*T_2\)有相同的特征值，也就是\(T_1,T_2\)有相同的奇异值。
+\item
+  \(\Rightarrow:\) 设
+  \[T_1 v= s_1\langle v,e_1\rangle f_1+\cdots+s_n\langle v,e_n\rangle f_n,\]
+  \[T_2 v= s_1\langle v,e'_1\rangle f'_1+\cdots+s_n\langle v,e'_n\rangle f'_n.\]
+\end{itemize}
+
+定义\(S_1,S_2\in\calL(V)\):
+\[S_1(a_1f_1'+\cdots+a_nf_n')=a_1f_1+\cdots+a_nf_n,\]
+\[S_2(a_1e_1+\cdots+a_ne_n)=a_1e'_1+\cdots+a_ne'_n,\]
+那么\(\|S_1(a_1f_1'+\cdots+a_nf_n')\|^2=|a_1|^2+\cdots+|a_n|^2=\|a_1f_1'+\cdots+a_nf_n'\|^2\),
+所以\(S_1\)是一个等距同构。类似地，\(S_2\)也是一个等距同构。 \[
+\begin{aligned}
+T_1v &= s_1\langle v,e_1\rangle f_1+\cdots+s_n\langle v,e_n\rangle f_n\\
+&=S_1(s_1\langle v,e_1\rangle f'_1+\cdots+s_n\langle v,e_n\rangle f'_n)\\
+\end{aligned}\] \[
+\begin{aligned}
+T_2(S_2v)&=T_2(\langle v,e_1\rangle e_1'+\cdots+\langle v,e_n\rangle e'_n)\\
+&=s_1\langle v,e_1\rangle f_1'+\cdots+s_n\langle v,e_n\rangle f_n'\\
+\end{aligned}
+\] 因此证得\(T_1v=S_1T_2S_2(v)\).
+
+\bigskip
+
+\noindent{} 8. 设\(T\in\calL(V)\).
+令\(\hat{s}\)表示\(T\)的最小奇异值，\(s\)表示\(T\)的最大奇异值。证明对每个\(v\in V\)都有
+\[\hat{s}\|v\|\le\|Tv\|\le s\|v\|.\]
+
+\smallskip
+
+\noindent{} 解：设\(T\)有奇异值分解
+\[Tv = s_1\langle v,e_1\rangle f_1+\cdots+s_n\langle v,e_n\rangle f_n.\]
+那么显然有\(\|Tv\|_2 = s_1^2|\langle v,e_1\rangle|^2+\cdots +s_n^2|\langle v,e_n\rangle|^2\),
+而\(\hat{s}=\min\{s_1,\cdots,s_n\},s=\max\{s_1,\cdots,s_n\}\),
+所以\(\hat{s}^2\|v\|^2\le\|Tv\|^2\le s\|v\|^2\).
+
+\bigskip
+
+\noindent{} 9. 设\(T',T''\in\calL(V)\).
+令\(s'\)表示\(T'\)的最大奇异值，\(s''\)表示\(T''\)的最大奇异值，\(s\)表示\(T'+T''\)的最大奇异值。证明\(s\le s'+s''\).
+
+\smallskip
+
+\noindent{} 解：令\(T=T'+T''\),
+\(s\)即\(\sqrt{T^*T}\)的最大特征值，那么存在\(v,\|v\|=1\)使得\(\sqrt{T^*T}v=sv\),
+那么
+\[s = s\|v\|=\|\sqrt{T^*T}v\|=\|Tv\|\le\|T'v\|+\|T''v\|\le s'+s''.\]
+
+\bigskip
+
+\section{迹与行列式}\label{ux8ff9ux4e0eux884cux5217ux5f0f}
+
+\noindent{} 1.
+举出实向量空间\(V\)及\(T\in\calL(V)\)的例子，使得\(\trace(T^2)<0\).
+
+\smallskip
+
+\noindent{} 解：考虑\(\R^2\), 定义\(Te_1=e_2,Te_2=-e_1\), 那么 \[
+\calM(T)=\begin{pmatrix}
+0&-1\\
+1&0\\
+\end{pmatrix},
+\calM(T^2)=\begin{pmatrix}
+-1&0\\
+0&-1\\
+\end{pmatrix}.\] 因此\(\trace(T^2)<0\).
+
+\smallskip
+
+\noindent{} Remark:
+如果考虑的不是\(\trace(T^2)\)而是\(\trace(T^{\mathrm{T}}T)\)，那一定大于等于0.
+如果是复向量空间上的算子，那么\(\trace(T^*T)\ge 0\).
+
+\bigskip
+
+\noindent{} 2. 设\(V\)是实向量空间，\(T\in\calL(V)\),
+并且有一个由\(T\)的本征向量组成的基，证明\(\trace(T^2)\ge 0\).
+
+\smallskip
+
+\noindent{}
+解：由于\(T\)有一个由\(T\)的本征向量构成的基，那么\(T\)有\(\dim V\)个实特征值（计重数）\(\lambda_1,\lambda_2,\cdots,\lambda_{\dim V}\).
+显然\(T^2\)的特征值是\(\lambda_1^2,\lambda_2^2,\cdots,\lambda_{\dim V}^2\),
+所以\(\trace(T^2)\ge 0\).
+
+\bigskip
+
+\noindent{} 3. 设\(V\)是内积空间，并且\(v,w\in\calL(V)\).
+定义\(T\in\calL(V)\)为\(Tu=\langle u,v\rangle w\). 求\(\trace(T)\).
+
+\smallskip
+
+\noindent{} 解：若\(v=0\)那么显然\(\trace T=0\),
+下考虑\(v\ne 0\)的情况。整个空间\(V=\span(v)\oplus(\span(v))^{\perp}\).
+对于\(u\in(\span(v))^{\perp}\), 有\(Tu=\langle u,v\rangle w=0\).
+对于\(v\),
+有\(Tv=\langle v,v\rangle w=\langle v,v\rangle (\frac{\langle w,v\rangle}{\|v\|^2}v+w-\frac{\langle w,v\rangle}{\|v\|^2}v)\),
+即\(Tv\)在\(v\)方向上的分量是\(\langle w,v\rangle\).
+因此\(\trace(T)=\langle w,v\rangle\).
+
+\smallskip
+
+\noindent{} Remark: PPT中的hint有误。
+
+\bigskip
+
+\noindent{} 4. 证明：如果\(P\in\calL(V)\)满足\(P^2=P\),
+那么\(\trace P\)是非负整数。
+
+\smallskip
+
+\noindent{}
+解：\(P^2=P\)说明\(P\)是一个投影算子，其特征值只能为\(0\)或\(1\).
+或者可以直接证：设\(\lambda\)是\(P\)的特征值，那么\(\lambda^2\)是\(P^2\)的特征值，又\(P^2=P\),
+所以\(\lambda^2=\lambda\)推出\(\lambda=0\)或\(1\).
+因此\(\trace P\)是非负整数。
+
+\bigskip
+
+\noindent{} 5. 设\(V\)是内积空间，并且\(T\in\calL(V)\).
+证明：如果\((e_1,e_2,\cdots,e_n)\)是\(V\)的规范正交基，那么
+\[\trace(T^*T)=\|Te_1\|^2+\cdots+\|Te_n\|^2.\]
+证明上式右端与\(V\)的规范正交基\((e_1,e_2,\cdots,e_n)\)的选取无关。
+
+\smallskip
+
+\noindent{}
+解：注意到\(\|Te_i\|^2=\langle Te_i,Te_i\rangle = \langle T^*Te_i,e_i\rangle\)即为\(T^*Te_i\)在\(e_i\)方向的分量，由此即可知
+\[\trace(T^*T)=\|Te_1\|^2+\cdots+\|Te_n\|^2.\]
+该式子左侧与规范正交基的选取无关，因此右端也与规范正交基的选取无关。
+
+\smallskip
+
+\noindent{} Remark:
+\(\trace(T^*T)\)事实上等于\(\calM(T)\)的所有元素的``平方和''，可以看作是衡量矩阵或者算子``大小''的一种方式，类似于绝对值或者向量范数，被称为Frobenius范数，他满足范数定义的几条性质：正定性、正齐性、三角不等式。实际上对于矩阵，又可以把所有元素展平成一个向量，Frobenius范数就可以看成是向量的欧氏范数。
+
+\bigskip
+
+\noindent{} 6. 设\(V\)是复内积空间，\(T\in\calL(V)\),
+并设\(\lambda_1,\cdots,\lambda_n\)是\(T\)的本征值，按照重数重复。设 \[
+\begin{pmatrix}
+a_{11} & \cdots & a_{1n} \\
+\vdots &\ddots&\vdots\\
+a_{n1} &\cdots & a_{nn}
+\end{pmatrix}
+\] 是\(T\)关于\(V\)的某个规范正交基的矩阵。证明
+\[|\lambda_1|^2+\cdots+|\lambda_n|^2\le\sum_{k=1}^n\sum_{j=1}^n|a_{jk}|^2.\]
+
+\smallskip
+
+\noindent{} 解：不等式右侧即为\(\trace(T^*T)\),
+所以只需证\(|\lambda_1|^2+\cdots+|\lambda_n|^2\le \trace(T^*T)\).
+由于\(V\)是复内积空间，可找到一组基，在这组基下\(\calM(T)\)是一个上三角矩阵，对角元为\(\lambda_i\),
+这样\([\calM(T^*T)]_{ii}=[\calM(T^*)\calM(T)]_{ii}\ge|\lambda_i|^2\),
+因此\(|\lambda_1|^2+\cdots+|\lambda_n|^2\le \sum_{i=1}^n[\calM(T^*T)]_{ii}=\trace(T^*T)\).
+
+\smallskip
+
+\noindent{} Remark:
+
+\begin{itemize}
+\tightlist
+\item
+  如果\(T\)是正规算子，可证明题中的等号成立；
+\item
+  如果考虑的是奇异值而不是特征值，等号也成立。
+\end{itemize}
+
+\bigskip
+
+\end{document}
